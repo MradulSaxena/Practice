@@ -12,6 +12,9 @@
 #include <iostream>
 #include <string>
 #include <queue>
+#include <unordered_set>
+#include <set>
+#include <unordered_map>
 
 using namespace std;
 #endif /* common_incl_h */

@@ -9,7 +9,6 @@
 #ifndef heapsort_h
 #define heapsort_h
 
-
 class heapSort {
 public:
     void swap (int &a, int &b) {
