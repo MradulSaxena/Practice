@@ -241,6 +241,11 @@ void leaders (vector <int> arr) {
 
 void test_array (void) {
 
+    vector<int> arr = {4,5,6,7,8,10,11,12};
+    //vector<int> arr = {1,2,3,4,6,7,8,9};
+    cout << "val is "<<
+    findmissing(arr, 0, static_cast<int>(arr.size()-1), arr[0])<< endl;
+    
     cout << "\nFind the number appearing only once in the array\n";
     vector<int>array1 = {1,1,1,2,2,3,2,3,3,5};
     cout<< "number is "<< findone(array1)<<endl;
@@ -283,8 +288,5 @@ void test_array (void) {
     leaders(leader_array);
     cout << endl;
     
-    //    vector<int> arr = {4,5,6,7,8,10,11,12};
-    //    //vector<int> arr = {1,2,3,4,6,7,8,9};
-    //    cout << "val is "<<
-    //        findmissing(arr, 0, static_cast<int>(arr.size()-1), arr[0])<< endl;
+
 }
