@@ -279,6 +279,7 @@ int minimum_platforms (vector<int> arrival_times,
     
     return result;
 }
+
 void test_array (void) {
 
     vector<int> arr = {4,5,6,7,8,10,11,12};
