@@ -78,7 +78,7 @@ int findmissing(vector<int>&arr, int start, int high, const int first_val)
 //
 // Subarray with given sum (Google, Facebook, Apple, Amazon)
 //
-void subarray_with_given_sum (const vector<int>&arr, int sum)
+void subarray_with_given_sum (vector<int>&arr, int sum)
 {
     int index_low = 0;
     int index_high = 0;
