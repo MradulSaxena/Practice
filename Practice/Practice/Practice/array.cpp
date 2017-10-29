@@ -280,6 +280,61 @@ int minimum_platforms (vector<int> arrival_times,
     return result;
 }
 
+//
+//find_k_smallest: Find the kth smallest element from the given array
+//
+int find_k_smallest (const vector<int> arr, int k)
+{
+    priority_queue<int, vector<int>, compare> pq;
+    
+    for (int i:arr) {
+        pq.push(i);
+    }
+    
+    while (k>0) {
+        pq.pop();
+        k--;
+    }
+    
+    return pq.top();
+}
+
+int get_max (const deque<int> queue) {
+    
+    int max = INT_MIN;
+    
+    for (int i : queue) {
+        if (max<i) {
+            max = i;
+        }
+    }
+    
+    return max;
+    
+}
+
+//
+//Maximum of all subarrays of size k
+//
+void max_k_subarray (const vector<int> arr, int k)
+{
+    deque<int> queue;
+    int size = static_cast<int>(arr.size());
+    
+    for (int i=0; i<size; i++) {
+        if (queue.size() == k) {
+            cout << get_max(queue) << " ";
+            queue.pop_back();
+        }
+        queue.push_front(arr[i]);
+    }
+    
+    if (queue.size() == k) {
+        cout << get_max(queue);
+        queue.pop_back();
+    }
+}
+
 void test_array (void) {
 
     vector<int> arr = {4,5,6,7,8,10,11,12};
@@ -335,4 +390,16 @@ void test_array (void) {
             minimum_platforms(arrival, departure);
     cout << endl;
 
+    int k = 4;
+    cout << "\nKth Smallest Number in an array\n";
+    cout << "Kth smallest number of array {15, 2, 4, 8, 9, 5, 10, 23} "
+            "where k is " << k << " is " << find_k_smallest(array3, k);
+    cout << endl;
+    
+    cout << "\nMaximum of all subarrays of size k (sliding window max)\n";
+    cout << "Maximum of all subarrays of array {15, 2, 4, 8, 9, 5, 10, 23} "
+            "size k where k is 4 is ";
+    max_k_subarray(array3, k);
+    cout << endl;
+    
 }

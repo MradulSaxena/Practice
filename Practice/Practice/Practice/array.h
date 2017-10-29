@@ -9,6 +9,24 @@
 #ifndef array_h
 #define array_h
 
+//
+//comparator function to pass to the stl
+//
+struct compare {
+    bool operator() (const int &a, const int &b) {
+        return a > b ? true: false;
+    }
+};
+
+//
+//comparator function to pass to the stl
+//
+struct greater_comp {
+    bool operator() (const int &a, const int &b) {
+        return a < b ? true: false;
+    }
+};
+
 void test_array(void);
 
 
@@ -60,4 +78,14 @@ void leaders (vector <int> arr);
 //
 int minimum_platforms (const vector<int> arrival_times,
                        const vector<int> departure_times);
+
+//
+//find_k_smallest: Find the kth smallest element from the given array
+//
+int find_k_smallest (const vector<int> arr, int k);
+
+//
+//Maximum of all subarrays of size k
+//
+void max_k_subarray (const vector<int> arr, int k);
 #endif /* array_h */
