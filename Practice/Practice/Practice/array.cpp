@@ -216,6 +216,28 @@ int LIS (vector<int> arr) {
     return max;
 }
 
+//
+//
+//
+void leaders (vector <int> arr) {
+    int size = static_cast<int>(arr.size());
+    
+    if (size == 0) {
+        return;
+    }
+    
+    int max = arr[size-1];
+    // right most is always the leader
+    cout << max;
+    
+    for (int i = size-2; i>=0; i--) {
+        if (arr[i] > max) {
+            cout << " "<< arr[i];
+            max = arr[i];
+        }
+    }
+}
+
 void test_array (void) {
 
     cout << "\nFind the number appearing only once in the array\n";
@@ -251,6 +273,13 @@ void test_array (void) {
     
     cout << "\nLongest Increasing Subsequence \n";
     cout << "LIS is " << LIS(array3);
+    cout << endl;
+    
+    vector<int> leader_array = {16, 17, 4, 3, 5, 2};
+    cout << "\nLeaders in array \n";
+    cout << "http://www.geeksforgeeks.org/leaders-in-an-array\n";
+    cout << "\nLeaders in the array {16, 17, 4, 3, 5, 2} are ";
+    leaders(leader_array);
     cout << endl;
     
     //    vector<int> arr = {4,5,6,7,8,10,11,12};
