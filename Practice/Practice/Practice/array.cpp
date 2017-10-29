@@ -250,12 +250,34 @@ void leaders (const vector <int> arr) {
 //minimum_platforms : find the minimum number of platforms needed for trains
 //                    given their arrival and departure times.
 //
-int minimum_platforms (const vector<int> arrival_times,
-                       const vector<int> departure_times)
+int minimum_platforms (vector<int> arrival_times,
+                       vector<int> departure_times)
 {
+    //algorithm is to sort both and then check how many of them overlap
     int min_platforms_needed = 0;
+    sort(arrival_times.begin(), arrival_times.end());
+    sort(departure_times.begin(), departure_times.end());
     
-    return min_platforms_needed;
+    int size =static_cast<int>(arrival_times.size());
+    int result = 0;
+    int arrival=0;
+    int departure=0;
+    
+    while (arrival<size && departure<size) {
+        if (arrival_times[arrival]<departure_times[departure]) {
+            min_platforms_needed++;
+            arrival++;
+            
+            if (min_platforms_needed>result) {
+                result = min_platforms_needed;
+            }
+        } else {
+            min_platforms_needed--;
+            departure++;
+        }
+    }
+    
+    return result;
 }
 void test_array (void) {
 
@@ -301,13 +323,14 @@ void test_array (void) {
     
     vector<int> leader_array = {16, 17, 4, 3, 5, 2};
     cout << "\nLeaders in array \n";
-    cout << "\nLeaders in the array {16, 17, 4, 3, 5, 2} are ";
+    cout << "Leaders in the array {16, 17, 4, 3, 5, 2} are ";
     leaders(leader_array);
     cout << endl;
     
     vector<int> arrival = {900, 940, 950, 1100, 1500, 1800};
     vector<int> departure = {910, 1200, 1120, 1130, 1900, 2000};
-    cout << "\nMinimum Platforms required for trains are " <<
+    cout << "\nMinimum Platforms\n";
+    cout << "Minimum Platforms required for trains are " <<
             minimum_platforms(arrival, departure);
     cout << endl;
 
