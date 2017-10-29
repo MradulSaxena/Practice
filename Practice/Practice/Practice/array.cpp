@@ -10,7 +10,8 @@
 #include "array.h"
 
 
-int findone(const vector<int> a) {
+int findone(const vector<int> a)
+{
     int ones = 0;
     int twos = 0;
     int threes = 0;
@@ -54,7 +55,8 @@ int kadane_algorithm (vector <int>&arr)
 //
 // find a missing number from a sorted array
 //
-int findmissing(vector<int>&arr, int start, int high, const int first_val) {
+int findmissing(vector<int>&arr, int start, int high, const int first_val)
+{
     
     if (start>high) {
         return high+first_val+1;
@@ -76,14 +78,16 @@ int findmissing(vector<int>&arr, int start, int high, const int first_val) {
 //
 // Subarray with given sum (Google, Facebook, Apple, Amazon)
 //
-void subarray_with_given_sum (vector<int>&arr, int sum)
+void subarray_with_given_sum (const vector<int>&arr, int sum)
 {
     int index_low = 0;
     int index_high = 0;
     int curr_sum = 0;
     
-    while (index_high<arr.size() && curr_sum != sum) {
-        
+    while (curr_sum != sum && index_high<arr.size()) {
+        //
+        // repeatedly subtract the lower number index until curr_sum <= sum
+        //
         while (curr_sum > sum && index_low <arr.size()) {
             curr_sum = curr_sum - arr[index_low];
             index_low++;
@@ -99,7 +103,8 @@ void subarray_with_given_sum (vector<int>&arr, int sum)
 //
 // Sort an array of 0s 1s and 2s
 //
-void sort_array_0_1_2 (vector<int> &arr) {
+void sort_array_0_1_2 (vector<int> &arr)
+{
     
     int zero_count = 0;
     int ones_count = 0;
@@ -133,7 +138,8 @@ void sort_array_0_1_2 (vector<int> &arr) {
 // find the point where left sum is equal to the right sum
 // idea is to keep track of right sum and left sum at each index
 //
-void find_equilibrium_point (vector<int> arr) {
+void find_equilibrium_point (const vector<int> arr)
+{
     int array_size = static_cast<int>(arr.size());
     int sum = 0;
     
@@ -159,7 +165,8 @@ void find_equilibrium_point (vector<int> arr) {
 //
 //  max_increasing_subsequence : find the maximum sum from increasing numbers
 //
-int max_increasing_subsequence (vector<int> arr) {
+int max_increasing_subsequence (const vector<int> arr)
+{
     
     int size = static_cast<int>(arr.size());
     
@@ -192,7 +199,8 @@ int max_increasing_subsequence (vector<int> arr) {
 //
 //  LIS : find the longest increasing subsequence
 //
-int LIS (vector<int> arr) {
+int LIS (const vector<int> arr)
+{
     
     int size = static_cast<int>(arr.size());
     
@@ -220,7 +228,7 @@ int LIS (vector<int> arr) {
 //leaders : print all the leaders in the array. right most element is always
 //          leader. element greater than all it right neighbor is a leader.
 //
-void leaders (vector <int> arr) {
+void leaders (const vector <int> arr) {
     int size = static_cast<int>(arr.size());
     
     if (size == 0) {
@@ -238,7 +246,17 @@ void leaders (vector <int> arr) {
         }
     }
 }
-
+//
+//minimum_platforms : find the minimum number of platforms needed for trains
+//                    given their arrival and departure times.
+//
+int minimum_platforms (const vector<int> arrival_times,
+                       const vector<int> departure_times)
+{
+    int min_platforms_needed = 0;
+    
+    return min_platforms_needed;
+}
 void test_array (void) {
 
     vector<int> arr = {4,5,6,7,8,10,11,12};
@@ -287,7 +305,10 @@ void test_array (void) {
     leaders(leader_array);
     cout << endl;
     
-    
-    
+    vector<int> arrival = {900, 940, 950, 1100, 1500, 1800};
+    vector<int> departure = {910, 1200, 1120, 1130, 1900, 2000};
+    cout << "\nMinimum Platforms required for trains are " <<
+            minimum_platforms(arrival, departure);
+    cout << endl;
 
 }
