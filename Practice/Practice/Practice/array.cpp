@@ -217,7 +217,8 @@ int LIS (vector<int> arr) {
 }
 
 //
-//
+//leaders : print all the leaders in the array. right most element is always
+//          leader. element greater than all it right neighbor is a leader.
 //
 void leaders (vector <int> arr) {
     int size = static_cast<int>(arr.size());
