@@ -283,10 +283,11 @@ void test_array (void) {
     
     vector<int> leader_array = {16, 17, 4, 3, 5, 2};
     cout << "\nLeaders in array \n";
-    cout << "http://www.geeksforgeeks.org/leaders-in-an-array\n";
     cout << "\nLeaders in the array {16, 17, 4, 3, 5, 2} are ";
     leaders(leader_array);
     cout << endl;
+    
+    
     
 
 }
