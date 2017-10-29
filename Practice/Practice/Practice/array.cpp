@@ -161,7 +161,59 @@ void find_equilibrium_point (vector<int> arr) {
 //
 int max_increasing_subsequence (vector<int> arr) {
     
-    return 0;
+    int size = static_cast<int>(arr.size());
+    
+    vector<int>dp;
+    
+    for (int i:arr) {
+        dp.push_back(i);
+    }
+    
+    for (int i =1; i<size; i++) {
+        for (int j=0; j<i; j++) {
+            if (arr[i] > arr[j]) {
+                if (dp[i] < (dp[j] + arr[i])) {
+                    dp[i] = dp[j] + arr[i];
+                }
+            }
+        }
+    }
+    
+    int max = INT_MIN;
+    for (int i =0;i<size;i++) {
+        if (max<dp[i]) {
+            max = dp[i];
+        }
+    }
+    return max;
+}
+
+
+//
+//  LIS : find the longest increasing subsequence
+//
+int LIS (vector<int> arr) {
+    
+    int size = static_cast<int>(arr.size());
+    
+    vector<int>dp(size, 1);
+    
+    for (int i =1; i<size; i++) {
+        for (int j=0; j<i; j++) {
+            if (arr[i] > arr[j]) {
+                if (dp[i] < (dp[j] +1)) {
+                    dp[i] = dp[j] +1;
+                }
+            }
+        }
+    }
+    int max = INT_MIN;
+    for (int i =0;i<size;i++) {
+        if (max<dp[i]) {
+            max = dp[i];
+        }
+    }
+    return max;
 }
 
 void test_array (void) {
@@ -195,6 +247,10 @@ void test_array (void) {
     cout << "\nMaximum Sum Increasing Subsequence(Not LIS) \n";
     cout << "Maximum Sum Increasing Subsequence is " <<
             max_increasing_subsequence(array3);
+    cout << endl;
+    
+    cout << "\nLongest Increasing Subsequence \n";
+    cout << "LIS is " << LIS(array3);
     cout << endl;
     
     //    vector<int> arr = {4,5,6,7,8,10,11,12};
