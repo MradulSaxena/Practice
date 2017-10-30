@@ -8,6 +8,7 @@
 
 #ifndef trie_h
 #define trie_h
+
 #include "common_incl.h"
 
 #define ALPHABET_SIZE 26
