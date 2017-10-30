@@ -9,7 +9,9 @@
 #include "common_incl.h"
 #include "array.h"
 
-
+//
+// Find the number appearing once in the array
+//
 int findone(const vector<int> a)
 {
     int ones = 0;
@@ -424,15 +426,17 @@ bool find_triplets (const vector<int> arr) {
 
 void test_array (void) {
 
+    cout << "\nFind the missing number from the sorted array\n";
     vector<int> arr = {4,5,6,7,8,10,11,12};
     //vector<int> arr = {1,2,3,4,6,7,8,9};
     cout << "the missing number from aray {4,5,6,7,8,10,11,12} is "<<
     findmissing(arr, 0, static_cast<int>(arr.size()-1), arr[0]);
     cout << endl;
     
-    cout << "\nFind the number appearing only once in the array\n";
+    cout << "\nFind the number appearing only once in the array "
+            "{1,1,1,2,2,3,2,3,3,5} \n";
     vector<int>array1 = {1,1,1,2,2,3,2,3,3,5};
-    cout<< "number is "<< findone(array1);
+    cout<< "the number appearing once is "<< findone(array1);
     cout << endl;
     
     cout << "\nFind the maximum subarray (Kadane Algorithm)\n";
