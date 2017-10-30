@@ -9,6 +9,7 @@
 #ifndef trie_h
 #define trie_h
 
+#include "common_incl.h"
 
 #define ALPHABET_SIZE 26
 
@@ -17,8 +18,10 @@ typedef struct trie_s {
     bool is_word;
 } trie_t;
 
+trie_t* get_Node(void);
 
-bool insert(trie_t *root, string word);
-void print_trie(trie_t *root);
+status_t insert(trie_t *root, string word);
+
+void test_trie (void);
 
 #endif /* trie_h */

@@ -15,6 +15,22 @@
 #include <unordered_set>
 #include <set>
 #include <unordered_map>
+#include <new>
+#include <memory>
+#include <cstdio>
+#include <fstream>
+#include <cassert>
+#include <functional>
+#include <stdlib.h>
 
 using namespace std;
+
+typedef enum status {
+    EOK,
+    EFAIL,
+    EMEM,
+    EPARAM,
+    EMAX
+} status_t;
+
 #endif /* common_incl_h */
