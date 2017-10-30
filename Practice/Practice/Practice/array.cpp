@@ -132,6 +132,10 @@ void sort_array_0_1_2 (vector<int> &arr)
             twos_count--;
         }
     }
+    
+    for (int i: arr) {
+        cout << i << " ";
+    }
 }
 
 //
@@ -391,28 +395,28 @@ void test_array (void) {
 
     vector<int> arr = {4,5,6,7,8,10,11,12};
     //vector<int> arr = {1,2,3,4,6,7,8,9};
-    cout << "val is "<<
-    findmissing(arr, 0, static_cast<int>(arr.size()-1), arr[0])<< endl;
+    cout << "the missing number from aray {4,5,6,7,8,10,11,12} is "<<
+    findmissing(arr, 0, static_cast<int>(arr.size()-1), arr[0]);
+    cout << endl;
     
     cout << "\nFind the number appearing only once in the array\n";
     vector<int>array1 = {1,1,1,2,2,3,2,3,3,5};
-    cout<< "number is "<< findone(array1)<<endl;
+    cout<< "number is "<< findone(array1);
+    cout << endl;
     
     cout << "\nFind the maximum subarray (Kadane Algorithm)\n";
     vector<int> array2 = {-2, -3, 4, -1, -2, 1, 5, -3};
-    cout << "maximum_subarray sum is " << kadane_algorithm(array2)<<endl;
+    cout << "maximum_subarray sum is " << kadane_algorithm(array2);
+    cout << endl;
     
     cout << "\nFind the subarray with the given sum\n";
     vector<int> array3 = {15, 2, 4, 8, 9, 5, 10, 23};
     subarray_with_given_sum(array3, 23);
+    cout << endl;
     
     cout << "\nSort an array of 0s 1s and 2s\n";
     vector<int>array4 = {1,2,1,0,2,1,0,2,0,1};
     sort_array_0_1_2(array4);
-    
-    for (int i: array4) {
-        cout << i << " ";
-    }
     cout << endl;
     
     cout << "\nEquilibrium Point (Sum of left = Sum of right)\n";
