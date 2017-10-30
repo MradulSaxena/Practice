@@ -12,6 +12,7 @@
 #include "string.h"
 #include "list.h"
 #include "array.h"
+#include "trie.h"
 
 
 template <typename T, typename S>
@@ -30,6 +31,8 @@ int main(int argc, const char * argv[]) {
 //    test_list();
 
     test_array();
+    
+    test_trie();
 
     return 0;
 }

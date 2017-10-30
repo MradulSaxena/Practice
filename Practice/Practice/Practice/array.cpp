@@ -53,7 +53,6 @@ int kadane_algorithm (vector <int>&arr)
     return max_so_far;
 }
 
-
 //
 // find a missing number from a sorted array
 //
@@ -436,7 +435,7 @@ void test_array (void) {
     cout << "\nFind the number appearing only once in the array "
             "{1,1,1,2,2,3,2,3,3,5} \n";
     vector<int>array1 = {1,1,1,2,2,3,2,3,3,5};
-    cout<< "the number appearing once is "<< findone(array1);
+    cout << "the number appearing once is "<< findone(array1);
     cout << endl;
     
     cout << "\nFind the maximum subarray (Kadane Algorithm)\n";
@@ -499,10 +498,10 @@ void test_array (void) {
             find_capacity(rain_water_vector);
     cout << endl;
     
-    cout<< "\nPythagorean Triplets\n";
+    cout << "\nPythagorean Triplets\n";
     vector<int> pytha_triplet = {3, 1, 4, 6, 5};
 //    vector<int> pytha_triplet = {10, 4, 6, 12, 5};
-    cout<< "Pythagorean Triplet exist in the array " <<
+    cout << "Pythagorean Triplet exist in the array " <<
     find_triplets(pytha_triplet);
     cout << endl;
 }
