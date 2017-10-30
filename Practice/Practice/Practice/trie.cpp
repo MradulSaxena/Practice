@@ -69,6 +69,9 @@ status_t insert (trie_t *root, string word) {
     return status;
 }
 
+//
+//
+//
 void test_trie (void)
 {
     status_t status = EOK;
