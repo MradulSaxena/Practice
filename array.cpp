@@ -480,7 +480,7 @@ void test_array (void) {
             minimum_platforms(arrival, departure);
     cout << endl;
 
-    int k = 4;
+    int k = 5;
     cout << "\nKth Smallest Number in an array\n";
     cout << "Kth smallest number of array {15, 2, 4, 8, 9, 5, 10, 23} "
             "where k is " << k << " is " << find_k_smallest(array3, k);
