@@ -391,6 +391,31 @@ int find_capacity (const vector<int> arr)
     return stored_water;
 }
 
+//
+//find_triplets : Pythagorean Triplet in an array
+//                find if there exist a triplet in the array such that
+//                a^2 + b^2 = c^2
+//
+bool find_triplets (const vector<int> arr) {
+    
+    int size = static_cast<int>(arr.size());
+    unordered_set<int> my_set;
+    
+    for (int i=0; i<size; i++) {
+        for (int j=0; j< size;j++) {
+            if (i==j) continue;
+            my_set.insert(pow(arr[i],2) + pow(arr[j],2));
+        }
+    }
+    
+    for (int i=0; i<size; i++) {
+        int value = pow(arr[i],2);
+        if (my_set.count(value)) {
+            return true;
+        }
+    }
+    return false;
+}
 void test_array (void) {
 
     vector<int> arr = {4,5,6,7,8,10,11,12};
@@ -462,5 +487,12 @@ void test_array (void) {
     vector<int> rain_water_vector = {0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1};
     cout << "Maximum rain water that can be accumulated is " <<
             find_capacity(rain_water_vector);
+    cout << endl;
+    
+    cout<< "\nPythagorean Triplets\n";
+    vector<int> pytha_triplet = {3, 1, 4, 6, 5};
+//    vector<int> pytha_triplet = {10, 4, 6, 12, 5};
+    cout<< "Pythagorean Triplet exist in the array " <<
+    find_triplets(pytha_triplet);
     cout << endl;
 }

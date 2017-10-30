@@ -88,4 +88,21 @@ int find_k_smallest (const vector<int> arr, int k);
 //Maximum of all subarrays of size k
 //
 void max_k_subarray (const vector<int> arr, int k);
+
+//
+// Trapping Rain Water: find the amount of water that can be stored between ,
+//                      given the height of the bars
+// Algorithm: Precompute. We keep track of the max left height for each cell as
+//            well as the right height. The amount of water that it can hold is
+//            the smaller of the two heights minus the height of the cell.
+//            Do this for all the cells and add the result. O(n)
+//
+int find_capacity (const vector<int> arr);
+
+//
+//find_triplets : Pythagorean Triplet in an array
+//                find if there exist a triplet in the array such that
+//                a^2 + b^2 = c^2
+//
+bool find_triplets (const vector<int> arr);
 #endif /* array_h */
