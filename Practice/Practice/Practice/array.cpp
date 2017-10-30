@@ -392,17 +392,22 @@ int find_capacity (const vector<int> arr)
 }
 
 //
-//find_triplets : Pythagorean Triplet in an array
-//                find if there exist a triplet in the array such that
-//                a^2 + b^2 = c^2
+// find_triplets : Pythagorean Triplet in an array
+//                 find if there exist a triplet in the array such that
+//                 a^2 + b^2 = c^2
+// Algorithm:      We store all the psossible a^2 + b^2 in a set so that they
+//                 are unique and then check the square of every number. If it
+//                 exist in the set then there is a solution.
+//                 PS: This solution will only work if array has all non-zero
+//                     values
 //
 bool find_triplets (const vector<int> arr) {
     
     int size = static_cast<int>(arr.size());
     unordered_set<int> my_set;
     
-    for (int i=0; i<size; i++) {
-        for (int j=0; j< size;j++) {
+    for (int i=0; i < size; i++) {
+        for (int j=0; j < size;j++) {
             if (i==j) continue;
             my_set.insert(pow(arr[i],2) + pow(arr[j],2));
         }
@@ -416,6 +421,7 @@ bool find_triplets (const vector<int> arr) {
     }
     return false;
 }
+
 void test_array (void) {
 
     vector<int> arr = {4,5,6,7,8,10,11,12};
