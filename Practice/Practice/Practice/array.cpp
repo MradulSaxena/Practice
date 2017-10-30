@@ -163,7 +163,40 @@ void find_equilibrium_point (const vector<int> arr)
 }
 
 //
+//  LIS : find the longest increasing subsequence
+//  Algorithm: DP solution. Keep a memoized array to store the LIS till i-1 and use
+//             that to find the LIS of i. idea is to increment LIS of i if a[i]
+//             > a[j] and LIS [i] < LIS[j]+1. Do this for j=0 to i-1.
+//
+int LIS (const vector<int> arr)
+{
+    
+    int size = static_cast<int>(arr.size());
+    
+    vector<int>dp(size, 1);
+    
+    for (int i =1; i<size; i++) {
+        for (int j=0; j<i; j++) {
+            if (arr[i] > arr[j]) {
+                if (dp[i] < (dp[j] +1)) {
+                    dp[i] = dp[j] +1;
+                }
+            }
+        }
+    }
+    int max = INT_MIN;
+    for (int i =0;i<size;i++) {
+        if (max<dp[i]) {
+            max = dp[i];
+        }
+    }
+    return max;
+}
+
+//
 //  max_increasing_subsequence : find the maximum sum from increasing numbers
+//  Algorithm: DP Solution. Same as LIS. instead of adding 1 to the result we
+//             add arr[i] and use arr[i] to check if we need to update the dp[i]
 //
 int max_increasing_subsequence (const vector<int> arr)
 {
@@ -186,35 +219,6 @@ int max_increasing_subsequence (const vector<int> arr)
         }
     }
     
-    int max = INT_MIN;
-    for (int i =0;i<size;i++) {
-        if (max<dp[i]) {
-            max = dp[i];
-        }
-    }
-    return max;
-}
-
-
-//
-//  LIS : find the longest increasing subsequence
-//
-int LIS (const vector<int> arr)
-{
-    
-    int size = static_cast<int>(arr.size());
-    
-    vector<int>dp(size, 1);
-    
-    for (int i =1; i<size; i++) {
-        for (int j=0; j<i; j++) {
-            if (arr[i] > arr[j]) {
-                if (dp[i] < (dp[j] +1)) {
-                    dp[i] = dp[j] +1;
-                }
-            }
-        }
-    }
     int max = INT_MIN;
     for (int i =0;i<size;i++) {
         if (max<dp[i]) {
@@ -249,6 +253,9 @@ void leaders (const vector <int> arr) {
 //
 //minimum_platforms : find the minimum number of platforms needed for trains
 //                    given their arrival and departure times.
+//Algorithm:          sort both the array in increasing order, keep two variables
+//                    and increment platform if they overlap and decrement if they
+//                    don't.keep track of the max platforms ever seen.
 //
 int minimum_platforms (vector<int> arrival_times,
                        vector<int> departure_times)
@@ -282,6 +289,7 @@ int minimum_platforms (vector<int> arrival_times,
 
 //
 //find_k_smallest: Find the kth smallest element from the given array
+//Algorithm: create a min heap (priority Q) from the array, then pop min k times
 //
 int find_k_smallest (const vector<int> arr, int k)
 {
@@ -299,6 +307,9 @@ int find_k_smallest (const vector<int> arr, int k)
     return pq.top();
 }
 
+//
+//get_max: utility function to get the max out of a Queue DS
+//
 int get_max (const deque<int> queue) {
     
     int max = INT_MIN;
@@ -310,29 +321,70 @@ int get_max (const deque<int> queue) {
     }
     
     return max;
-    
 }
 
 //
-//Maximum of all subarrays of size k
+// Maximum of all subarrays of size k
+// Algorithm: create a queue of size k and find the max, then keep on
+//            popping from the back and push to the front
 //
 void max_k_subarray (const vector<int> arr, int k)
 {
     deque<int> queue;
     int size = static_cast<int>(arr.size());
     
-    for (int i=0; i<size; i++) {
+    for (int i=0; i<=size; i++) {
         if (queue.size() == k) {
             cout << get_max(queue) << " ";
             queue.pop_back();
         }
-        queue.push_front(arr[i]);
+        if (i<size)
+            queue.push_front(arr[i]);
+    }
+}
+
+//
+// Trapping Rain Water: find the amount of water that can be stored between ,
+//                      given the height of the bars
+// Algorithm: Precompute. We keep track of the max left height for each cell as
+//            well as the right height. The amount of water that it can hold is
+//            the smaller of the two heights minus the height of the cell.
+//            Do this for all the cells and add the result. O(n)
+//
+int find_capacity (const vector<int> arr)
+{
+    int size = static_cast<int>(arr.size());
+    
+    if (size < 2) {
+        //cannot store water
+        return 0;
     }
     
-    if (queue.size() == k) {
-        cout << get_max(queue);
-        queue.pop_back();
+    vector<int> left(size, 0);
+    vector<int> right(size, 0);
+    int stored_water = 0;
+    
+    // precompute left array
+    left[0] = arr[0];
+    for (int i=1; i<size; i++) {
+        left[i] = max(left[i-1],arr[i]);
     }
+    
+    //precompute right array
+    right[size-1] = arr[size-1];
+    for (int i=size-2; i>=0; i--) {
+        right[i] = max(right[i+1],arr[i]);
+    }
+    
+    // Calculate the accumulated water for each element
+    // consider the amount of water on ith bar, the
+    // amount of water accumulated on this particular
+    // bar will be equal to min(left[i], right[i]) - arr[i]
+    for (int i=0; i<size; i++) {
+        stored_water += min(left[i], right[i]) - arr[i];
+    }
+    
+    return stored_water;
 }
 
 void test_array (void) {
@@ -402,4 +454,9 @@ void test_array (void) {
     max_k_subarray(array3, k);
     cout << endl;
     
+    cout << "\nTrapping Rain Water\n";
+    vector<int> rain_water_vector = {0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1};
+    cout << "Maximum rain water that can be accumulated is " <<
+            find_capacity(rain_water_vector);
+    cout << endl;
 }
