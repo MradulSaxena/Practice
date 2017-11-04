@@ -423,6 +423,10 @@ bool find_triplets (const vector<int> arr) {
     return false;
 }
 
+void stockBuySell (const vector<int> stock_prices)
+{
+    
+}
 void test_array (void) {
 
     cout << "\nFind the missing number from the sorted array\n";
@@ -503,5 +507,10 @@ void test_array (void) {
 //    vector<int> pytha_triplet = {10, 4, 6, 12, 5};
     cout << "Pythagorean Triplet exist in the array " <<
     find_triplets(pytha_triplet);
+    cout << endl;
+    
+    cout<< "\n Buy and Sell Stocks\n";
+    vector<int> stock_prices = {100, 180, 260, 310, 40, 535, 695};
+    stockBuySell(stock_prices);
     cout << endl;
 }

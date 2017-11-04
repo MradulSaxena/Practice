@@ -13,6 +13,7 @@
 #include "list.h"
 #include "array.h"
 #include "trie.h"
+#include "tree.h"
 
 
 template <typename T, typename S>
@@ -33,6 +34,8 @@ int main(int argc, const char * argv[]) {
     test_array();
     
     test_trie();
+    
+    test_tree();
 
     return 0;
 }
