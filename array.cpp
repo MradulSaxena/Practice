@@ -423,8 +423,12 @@ bool find_triplets (const vector<int> arr) {
     return false;
 }
 
+//
+//stockBuySell : Maximize the profit given the proze of stock at each day
+//
 void stockBuySell (const vector<int> stock_prices)
 {
+    
     
 }
 void test_array (void) {
@@ -509,7 +513,7 @@ void test_array (void) {
     find_triplets(pytha_triplet);
     cout << endl;
     
-    cout<< "\n Buy and Sell Stocks\n";
+    cout<< "\nBuy and Sell Stocks\n";
     vector<int> stock_prices = {100, 180, 260, 310, 40, 535, 695};
     stockBuySell(stock_prices);
     cout << endl;
