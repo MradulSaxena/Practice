@@ -8,19 +8,31 @@
 #include "common_incl.h"
 #include "avl.h"
 
-avlnode_t * getNode (int data) {
+#define LEAF_HEIGHT     1
+
+avlnode_t * getNode (int data)
+{
     avlnode_t *newnode = new avlnode_t;
-    newnode->data = data;
-    newnode->left = NULL;
-    newnode->right = NULL;
-    newnode->height = 1;
+    
+    if (!newnode) {
+        return nullptr;
+    }
+    
+    newnode->data   = data;
+    newnode->height = LEAF_HEIGHT;
+    
+    newnode->left   = NULL;
+    newnode->right  = NULL;
+    
     return newnode;
 }
+
 // A utility function to get maximum of two integers
 int max(int a, int b)
 {
     return (a > b)? a : b;
 }
+
 void preOrder (avlnode_t * root) {
     
     if (root) {
@@ -87,18 +99,18 @@ avlnode_t * right_rotate (avlnode_t * root)
     return new_root;
 }
 
-avlnode_t * insert (avlnode_t * root, int data)
+avlnode_t * insert_node (avlnode_t * root, int data)
 {
 
-    // insert like a normal BST first
+    // insert_node like a normal BST first
     if (!root) {
         return getNode(data);
     }
 
     if (root->data > data) {
-        root->left = insert(root->left, data);
+        root->left = insert_node(root->left, data);
     } else if (root->data < data) {
-        root->right = insert(root->right, data);
+        root->right = insert_node(root->right, data);
     } else {
         // equal keys are not allowed in BST
         return root;
@@ -110,9 +122,6 @@ avlnode_t * insert (avlnode_t * root, int data)
     
     int balance = get_balance_factor(root);
     
-    cout << "Data is " << root->data<< " height is " << balance;
-    cout<< endl;
-
     //left left case
     if (balance > 1 && (data < root->left->data)) {
         return right_rotate(root);
@@ -138,17 +147,33 @@ avlnode_t * insert (avlnode_t * root, int data)
     return root;
 }
 
+void delete_node (avlnode_t *root, int data)
+{
+    if (!root) {
+        return;
+    }
+
+}
 void test_avl (void)
 {
     avlnode_t   *root  = NULL;
 
-    root = insert(root, 10);
-    root = insert(root, 20);
-    root = insert(root, 30);
-    root = insert(root, 40);
-    root = insert(root, 50);
-    root = insert(root, 25);
-
+    root = insert_node(root, 10);
+    root = insert_node(root, 20);
+    root = insert_node(root, 30);
+    root = insert_node(root, 40);
+    root = insert_node(root, 50);
+    root = insert_node(root, 25);
+    
+//  The constructed AVL Tree would be
+//      30
+//     /  \
+//    20   40
+//   /  \    \
+//  10  25    50
+//
+    cout <<"\nPreOrder Traversal\n";
     preOrder(root);
+    cout <<endl;
 }
 
