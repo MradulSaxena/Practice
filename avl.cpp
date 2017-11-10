@@ -10,6 +10,9 @@
 
 #define LEAF_HEIGHT     1
 
+//
+//@function : getNode : allocates a new node and initializes with the data
+//
 avlnode_t * getNode (int data)
 {
     avlnode_t *newnode = new avlnode_t;
@@ -33,6 +36,9 @@ int max(int a, int b)
     return (a > b)? a : b;
 }
 
+//
+//@function : preOrder : prints the preOrder traversal of the tree
+//
 void preOrder (avlnode_t * root) {
     
     if (root) {
@@ -42,6 +48,33 @@ void preOrder (avlnode_t * root) {
     }
 }
 
+//
+//@function : inOrder : prints the inOrder traversal of the tree
+//
+void inOrder (avlnode_t * root) {
+    
+    if (root) {
+        inOrder (root->left);
+        cout << root->data << " ";
+        inOrder (root->right);
+    }
+}
+
+//
+//@function : postOrder : prints the postOrder traversal of the tree
+//
+void postOrder (avlnode_t * root) {
+    
+    if (root) {
+        postOrder (root->left);
+        postOrder (root->right);
+        cout << root->data << " ";
+    }
+}
+
+//
+//@function : get_height : get the height of the node
+//
 int get_height (avlnode_t *root)
 {
     if (!root) {
@@ -51,6 +84,9 @@ int get_height (avlnode_t *root)
     return root->height;
 }
 
+//
+//@function : get_balance_factor : get the balance factor of the node
+//
 int get_balance_factor(avlnode_t *root)
 {
     if (!root) {
@@ -60,8 +96,11 @@ int get_balance_factor(avlnode_t *root)
     return (get_height(root->left) - get_height(root->right));
 }
 
-// root->right becomes the root
-
+//
+//
+//@function : left_rotate : left rotates the tree with the given node
+//                          node->right becomes the root
+//
 avlnode_t * left_rotate (avlnode_t * root)
 {
     avlnode_t *new_root = root->right;
@@ -80,12 +119,17 @@ avlnode_t * left_rotate (avlnode_t * root)
     return new_root;
 }
 
+//
+//
+//@function : right_rotate : right rotates the tree with the given node
+//                           node->left becomes the root
+//
 avlnode_t * right_rotate (avlnode_t * root)
 {
-    avlnode_t *new_root = root->left;
+    avlnode_t *new_root      = root->left;
     avlnode_t *old_root_left = new_root->right;
     
-    root->left = old_root_left;
+    root->left      = old_root_left;
     new_root->right = root;
     
     
