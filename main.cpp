@@ -14,6 +14,7 @@
 #include "array.h"
 #include "trie.h"
 #include "tree.h"
+#include "avl.h"
 
 
 template <typename T, typename S>
@@ -36,6 +37,7 @@ int main(int argc, const char * argv[]) {
     test_trie();
     
     test_tree();
+    test_avl();
 
     return 0;
 }
