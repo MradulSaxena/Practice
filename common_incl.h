@@ -22,6 +22,7 @@
 #include <cassert>
 #include <functional>
 #include <stdlib.h>
+#include <map>
 
 using namespace std;
 
