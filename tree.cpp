@@ -32,6 +32,35 @@ void print_left_view (node_t *root, int level, int *max)
     print_left_view(root->left, level+1, max);
     print_left_view(root->right, level+1, max);
 }
+
+//
+// spiral_level_order : prints the spiral type of level order traversal
+//
+void spiral_level_order (node_t *root, int level, vector<deque<int>>& sol)
+{
+    if (!root) {
+        return;
+    }
+    
+    if (sol.size() == level) {
+        sol.push_back(deque<int>());
+    }
+   
+    if (level % 2 == 0) {
+        sol[level].push_front(root->data);
+    } else {
+        sol[level].push_back(root->data);
+    }
+    
+    spiral_level_order(root->left, level+1, sol);
+    spiral_level_order(root->right, level+1, sol);
+}
+
+//
+// bottom_view : print the bottom view of a binary tree
+//               idea is to do a vertical level order traversal and take
+//               the last element of each level vector
+//
 void bottom_view (node_t *root)
 {
     map<int, vector<int>> my_map;
@@ -62,14 +91,15 @@ void bottom_view (node_t *root)
     
     auto it = my_map.begin();
     while(it!=my_map.end()) {
-        for (int i=0;i<it->second.size();i++) {
-            cout << " " << it->second[i];
-        }
+        cout << " " << it->second[it->second.size()-1];
         cout<<endl;
         it++;
     }
-    
 }
+
+//
+// level_order_view : print the level order traversal of a binary tree
+//
 void level_order_view (node_t *root, int level, vector<vector<int>>& sol)
 {
     if (!root) {
@@ -90,6 +120,9 @@ void level_order_view (node_t *root, int level, vector<vector<int>>& sol)
     }
 }
 
+//
+// vertical_level_view : print the vertical level traversal
+//
 void vertical_level_view (node_t *root)
 {
     map<int, vector<int>> my_map;
@@ -151,6 +184,10 @@ bool check_bst (node_t *root)
     return (check_bst(root->right));
 
 }
+
+//
+// test_tree: driver function to test tree TC
+//
 void test_tree (void)
 {
 //    int max_level = INT_MIN;
@@ -166,24 +203,45 @@ void test_tree (void)
 //    
 //    cout << "\nTree is BST "<< check_bst(root);
 //    cout <<endl;
+    
 //
     vector<vector<int>> sol;
-    node_t *root = newNode(1);
-    root->left = newNode(2);
-    root->right = newNode(3);
-    root->left->left = newNode(4);
-    root->left->right = newNode(5);
-    root->right->left = newNode(6);
-    root->right->right = newNode(7);
-    root->right->left->right = newNode(8);
-    root->right->right->right = newNode(9);
-    root->right->right->left= newNode(10);
-    root->right->right->left->right= newNode(11);
-    root->right->right->left->right->right= newNode(12);
     
-    cout << "\nBottom View Of the Tree is ";
+    node_t *root = newNode(20);
+    root->left = newNode(8);
+    root->right = newNode(22);
+    root->left->left = newNode(5);
+    root->left->right = newNode(3);
+    root->right->left = newNode(4);
+    root->right->right = newNode(25);
+    root->left->right->left = newNode(10);
+    root->left->right->right = newNode(14);
+    
+    
+//    node_t *root = newNode(1);
+//    root->left = newNode(2);
+//    root->right = newNode(3);
+//    root->left->left = newNode(4);
+//    root->left->right = newNode(5);
+//    root->right->left = newNode(6);
+//    root->right->right = newNode(7);
+//    root->right->left->right = newNode(8);
+//    root->right->right->right = newNode(9);
+//    root->right->right->left= newNode(10);
+//    root->right->right->left->right= newNode(11);
+//    root->right->right->left->right->right= newNode(12);
+    
+    
+    
+    cout << "\nBottom View Of the Tree is \n";
+    bottom_view(root);
+    cout <<endl;
+    
+    cout << "\nVertical Level Order Traversal \n";
     vertical_level_view(root);
     cout <<endl;
+    
+    cout<<"\nLevel Order Traversal\n";
     level_order_view(root, 0, sol);
     
     for (int i=0;i<sol.size();i++) {
@@ -192,5 +250,19 @@ void test_tree (void)
         }
         cout<<endl;
     }
+    cout<<endl;
     
+    cout<<"\nSpiral Order Traversal\n";
+    vector<deque<int>> solution;
+    spiral_level_order(root, 0, solution);
+    
+    for (int i=0;i<solution.size();i++) {
+        auto it = solution[i].begin();
+        while (it != solution[i].end()) {
+            cout<< *it<< " ";
+            it++;
+        }
+        cout<<endl;
+    }
+    cout<<endl;
 }
