@@ -30,14 +30,16 @@ int main(int argc, const char * argv[]) {
 //
 //    test_string();
 //
-//    test_list();
-
-    test_array();
-    
-    test_trie();
+//   test_list();
+//
+//    test_array();
+//
+//    test_trie();
+//
+//    test_avl();
     
     test_tree();
-    test_avl();
+    
 
     return 0;
 }

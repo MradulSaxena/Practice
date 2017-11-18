@@ -13,7 +13,7 @@ void addNode(Node_t **head, int data) {
     Node_t *temp = (Node_t *)malloc (sizeof(Node_t));
     
     temp->data = data;
-    temp->next = *head;
+    temp->right = *head;
     *head = temp;
 }
 
@@ -21,7 +21,7 @@ void printlist(Node_t *head) {
     Node_t *temp = head;
     while(temp) {
         cout<<temp->data<< " ";
-        temp = temp->next;
+        temp = temp->right;
     }
     cout<<endl;
 }
@@ -37,8 +37,8 @@ void reverse(Node_t **head) {
     }
     
     while (temp) {
-        temp1 = temp->next;
-        temp->next = new_head;
+        temp1 = temp->right;
+        temp->right = new_head;
         new_head=temp;
         temp=temp1;
     }
@@ -54,15 +54,15 @@ void remove(Node_t **head, int value) {
     }
     
     if (temp->data == value) {
-        temp = temp->next;
+        temp = temp->right;
         *head = temp;
         remove(head,value);
-    } else if (temp->next &&
-               temp->next->data==value) {
-        temp->next = temp->next->next;
+    } else if (temp->right &&
+               temp->right->data==value) {
+        temp->right = temp->right->right;
         remove(head,value);
     } else {
-        temp=temp->next;
+        temp=temp->right;
         remove(&temp,value);
     }
 }

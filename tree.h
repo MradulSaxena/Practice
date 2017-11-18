@@ -10,13 +10,6 @@
 #define tree_h
 #include "common_incl.h"
 
-typedef struct  node_s {
-
-    int data;
-    struct node_s *left;
-    struct node_s *right;
-}node_t;
-
 void test_tree (void);
 
 #endif /* tree_h */

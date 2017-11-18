@@ -34,4 +34,12 @@ typedef enum status {
     EMAX
 } status_t;
 
+typedef struct  Node_s {
+    
+    int data;
+    struct Node_s *left;
+    struct Node_s *right;
+    struct Node_s *next;
+}Node_t;
+
 #endif /* common_incl_h */
