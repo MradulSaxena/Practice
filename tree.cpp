@@ -250,6 +250,131 @@ void tree_to_linked_list (Node_t *root, Node_t **head)
     
     tree_to_linked_list(root->left, head);
 }
+
+// Returns true if trees with roots as root1 and root2 are mirror
+bool isMirror( Node_t *root1,  Node_t *root2)
+{
+    // If both trees are emptu, then they are mirror images
+    if (root1 == NULL && root2 == NULL)
+        return true;
+    
+    // For two trees to be mirror images, the following three
+    // conditions must be true
+    // 1 - Their root node's key must be same
+    // 2 - left subtree of left tree and right subtree
+    //      of right tree have to be mirror images
+    // 3 - right subtree of left tree and left subtree
+    //      of right tree have to be mirror images
+    if (root1 && root2 && root1->data == root2->data)
+        return isMirror(root1->left, root2->right) &&
+        isMirror(root1->right, root2->left);
+    
+    // if neither of above conditions is true then root1
+    // and root2 are not mirror images
+    return false;
+}
+
+//
+//maxDepth or height of the binary tree
+//
+int maxDepth (Node_t *node)
+{
+    if (node==NULL) {
+        return 0;
+    }
+    
+    /* compute the depth of each subtree */
+    int lDepth = maxDepth(node->left);
+    int rDepth = maxDepth(node->right);
+        
+    /* use the larger one */
+    if (lDepth > rDepth)
+        return(lDepth+1);
+    else
+        return(rDepth+1);
+}
+
+//
+//max_path_sum : computes the maximum sum between all the nodes
+//
+int max_path_sum (Node_t *root, int &res)
+{
+    if (!root) {
+        return 0;
+    }
+    
+    int final_val = 0;
+    int left_sum = max_path_sum(root->left,res);
+    int right_sum = max_path_sum(root->right,res);
+    
+    // find the local maximum
+    final_val = max(root->data, max(root->data+left_sum, root->data+right_sum));
+    
+    // compare with the global max
+    res = max(res, max(final_val, root->data+left_sum+right_sum));
+    
+    return final_val;
+}
+
+//
+//preorder:
+//
+void preorder (Node_t *root)
+{
+    if (!root) {
+        return;
+    }
+    
+    cout << root->data << " ";
+    preorder(root->left);
+    preorder(root->right);
+}
+
+//
+//inorder:
+//
+void inorder (Node_t *root)
+{
+    if (!root) {
+        return;
+    }
+    
+    inorder(root->left);
+    cout << root->data << " ";
+    inorder(root->right);
+}
+
+//
+//preorder_to_bst: convert preorder traversal to BST
+//
+Node_t *preorder_to_bst (vector<int> preorder_vector)
+{
+    int size = static_cast<int>(preorder_vector.size());
+    
+    if (size == 0) {
+        return NULL;
+    }
+    
+    Node_t * root = newNode(preorder_vector[0]);
+    
+    if (size>1) {
+        int left_index_start = 1;
+        int left_index_end = 1;
+        while(root->data >preorder_vector[left_index_end]) {
+            left_index_end++;
+        }
+        vector<int> new_left(preorder_vector.begin()+left_index_start,
+                             preorder_vector.begin()+(left_index_end));
+        root->left  = preorder_to_bst(new_left);
+        
+        vector<int> new_right(preorder_vector.begin()+left_index_end,
+                              preorder_vector.end());
+        root->right = preorder_to_bst(new_right);
+    }
+    
+    return root;
+}
+
 //
 // test_tree: driver function to test tree TC
 //
@@ -271,7 +396,15 @@ void test_tree (void)
     
 //
     vector<vector<int>> sol;
-    
+    /* Constructing below tree
+           20
+          /   \
+         8     22
+        / \    / \
+       5   3  4   25
+          / \
+         10 14
+     */
     Node_t *root = newNode(20);
     root->left = newNode(8);
     root->right = newNode(22);
@@ -295,8 +428,6 @@ void test_tree (void)
 //    root->right->right->left= newNode(10);
 //    root->right->right->left->right= newNode(11);
 //    root->right->right->left->right->right= newNode(12);
-    
-    
     
     cout << "\nBottom View Of the Tree is \n";
     bottom_view(root);
@@ -368,6 +499,34 @@ void test_tree (void)
     Node_t *list_head = nullptr;
     tree_to_linked_list(newroot, &list_head);
     printlist(list_head);
+    cout<<endl;
+    
+    cout<<"\nHeight of the binary tree \n";
+    cout << maxDepth(root);
+    cout<<endl;
+    
+    Node_t *root1 = newNode(10);
+    root1->left        = newNode(2);
+    root1->right       = newNode(10);
+    root1->left->left  = newNode(20);
+    root1->left->right = newNode(1);
+    root1->right->right = newNode(-25);
+    root1->right->right->left   = newNode(3);
+    root1->right->right->right  = newNode(4);
+
+    cout<<"\nMaximum Path Sum\n";
+    int result_val = INT_MIN;
+    max_path_sum(root1, result_val);
+    cout<<"Maximum Path Sum is " << result_val;
+    cout<<endl;
+    
+    cout<<"\npreorder_to_bst\n";
+    vector<int> preorder_vector = {10, 5, 1, 7, 45, 40, 50};
+    Node_t *bst = preorder_to_bst(preorder_vector);
+    cout<<"\nInorder Traversal\n";
+    inorder(bst);
+    cout<<"\nPreorder Traversal\n";
+    preorder(bst);
     cout<<endl;
     
 }
