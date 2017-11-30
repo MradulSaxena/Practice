@@ -62,7 +62,89 @@ void kmp(string str, string pattern) {
     }
 }
 
+void swap (char *a, char *b)
+{
+    char temp = *a;
+    *a = *b;
+    *b = temp;
+}
+void permute (char *s, int start, int end)
+{
+    if (start == end) {
+        cout << s<<endl;
+        return;
+    } else {
+        for (int i=start; i<=end;i++) {
+            swap(s+start,s+i);
+            permute(s, start+1, end);
+            swap(s+start,s+i);
+        }
+    }
+}
 
+void print_substr(char *str, int start, int end)
+{
+    for (int i=start; i<=end;i++) {
+        cout<< str[i];
+    }
+    cout<<endl;
+}
+
+//
+//longest_palindromic_substring : DP solution which is O(N^2) and space also
+//                                O(N^2)
+//
+int longest_palindromic_substring (char *str)
+{
+    int size = static_cast<int>(strlen(str));
+    bool table[size][size];
+    int max_length = 1;
+    int start = 0;
+    
+    memset(table, false, sizeof(table));
+    
+    //all substring of length 1 is palindrome
+    for (int i=0;i<size;i++) {
+        table[i][i] = true;
+    }
+    
+    //check for all substring of length 2
+    for (int i=0;i<size-1;i++) {
+        if (str[i] == str[i+1]) {
+            table[i][i+1] = true;
+            max_length = 2;
+            //store the index of this substring
+            start = i;
+        }
+    }
+    
+    //check for lenghts of greater than 2
+    for (int k=3;k<size;k++) {
+        // fix the starting index as we want to only
+        // check for the substrings of length greater than 2
+        for (int i=0;i<size-k+1;i++) {
+            int j = i+k-1;
+            if (table[i+1][j-1] && str[i] == str[j]) {
+                table[i][j] = true;
+                if (k>max_length) {
+                    max_length = k;
+                    start = i;
+                }
+            }
+        }
+    }
+    cout << "the longest palindromic string is ";
+    print_substr(str, start, start+max_length-1);
+    return max_length;
+}
 void test_string (void) {
     kmp("ababababab", "aba");
+    string a = "abc";
+    char s [a.length()+1];
+    strcpy(s, a.c_str());
+    permute(s, 0, 2);
+    char str[] = "forgeeksskeegfor";
+    int max_pl_length = longest_palindromic_substring(str);
+    cout<< "the longest palindromic substring is " << max_pl_length;
+    cout<< endl;
 }
