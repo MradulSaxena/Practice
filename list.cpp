@@ -67,7 +67,38 @@ void remove(Node_t **head, int value) {
     }
 }
 
+//stl comparator function
+struct cmp {
+    bool operator()(const Node_t *p, const Node_t *q) {
+        return p->data > q->data;
+    }
+};
 
+//
+// merge k lists : merges k lists using heap
+//
+Node_t * mergek_lists (vector<Node_t *> lists)
+{
+    priority_queue<Node_t *, vector<Node_t *>, cmp> q;
+    Node_t *tail,*head;
+    
+    for (auto i:lists) {
+        if (i) q.push(i);
+    }
+    if (q.empty()) return NULL;
+    
+    head = tail = q.top();
+    q.pop();
+    if (head->next) q.push(head->next);
+    while(!q.empty()) {
+        tail->next = q.top();
+        q.pop();
+        tail = tail->next;
+        if (tail->next) q.push(tail->next);
+    }
+    
+    return head;
+}
 
 void test_list (void) {
     
