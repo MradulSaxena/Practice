@@ -23,6 +23,7 @@
 #include <functional>
 #include <stdlib.h>
 #include <map>
+#include <stack>
 
 using namespace std;
 
