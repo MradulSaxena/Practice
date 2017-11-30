@@ -91,6 +91,55 @@ void print_substr(char *str, int start, int end)
 }
 
 //
+//long_pal_substring : this function finds the longest plaindromic substring in
+//                     O(N^2) time with O(1) space. Idea is to find all the
+//                     palindromes with even length and odd length for a given
+//                     index and keep the longest one.
+//
+int long_pal_substring (char *str)
+{
+    int length = static_cast<int>(strlen(str));
+    int maxLength = 1;
+    
+    int start = 0;
+    int low = 0;
+    int high = 1;
+    for (int i=1; i<length; i++) {
+        
+        low = i-1;
+        high = i;
+        
+        // consider even length palindromes with center a i so low is i-1 and high is i
+        while(low>=0 && high < length && str[low]==str[high]) {
+            //check for the maxlength so far
+            if((high-low+1) > maxLength) {
+                maxLength = high-low+1;
+                start = low;
+            }
+            low--;
+            high++;
+        }
+        
+        low = i-1;
+        high = i+1;
+        
+        // consider odd length palindromes with center a i so low is i-1 and high is i+1
+        while(low>=0 && high < length && str[low]==str[high]) {
+            //check for the maxlength so far
+            if((high-low+1) > maxLength) {
+                maxLength = high-low+1;
+                start = low;
+            }
+            low--;
+            high++;
+        }
+    }
+    cout << "the longest palindromic string O(1) space is ";
+    print_substr(str, start, start+maxLength-1);
+
+    return maxLength;
+}
+//
 //longest_palindromic_substring : DP solution which is O(N^2) and space also
 //                                O(N^2)
 //
@@ -147,4 +196,9 @@ void test_string (void) {
     int max_pl_length = longest_palindromic_substring(str);
     cout<< "the longest palindromic substring is " << max_pl_length;
     cout<< endl;
+    
+    max_pl_length =  long_pal_substring(str);
+    cout<<"the longest palindromic substring with O(1) space "<< max_pl_length;
+    cout<<endl;
+    
 }
