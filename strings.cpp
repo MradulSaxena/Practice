@@ -62,12 +62,19 @@ void kmp(string str, string pattern) {
     }
 }
 
+//
+//swap: utility function to swap two characters
+//
 void swap (char *a, char *b)
 {
     char temp = *a;
     *a = *b;
     *b = temp;
 }
+
+//
+//permute: this function prints all the permutation for a given string
+//
 void permute (char *s, int start, int end)
 {
     if (start == end) {
@@ -82,6 +89,51 @@ void permute (char *s, int start, int end)
     }
 }
 
+//
+//check_parentheses: this function checks for the balanced parantheses in a given
+//                   string
+//
+
+bool check_parentheses(string str)
+{
+    stack<char> my_stack;
+    
+    for (int i=0; i<str.length();i++) {
+        if (str[i] == '(' || str[i] == '{' || str[i] == '[') {
+            my_stack.push(str[i]);
+        } else if (str[i] == ')' || str[i] == '}' || str[i] == ']') {
+            char temp = my_stack.top();
+            my_stack.pop();
+            
+            if (str[i] == ')') {
+                if (temp != '(') {
+                    return false;
+                }
+            }
+            if (str[i] == '}') {
+                if (temp != '{') {
+                    return false;
+                }
+            }
+            
+            if (str[i] == ']') {
+                if (temp != '[') {
+                    return false;
+                }
+            }
+        }
+    }
+    
+    if (!my_stack.empty()) {
+        return false;
+    }
+    
+    return true;
+}
+
+//
+//print_substr: utility function to print the substring for a string
+//
 void print_substr(char *str, int start, int end)
 {
     for (int i=start; i<=end;i++) {
@@ -186,12 +238,123 @@ int longest_palindromic_substring (char *str)
     print_substr(str, start, start+max_length-1);
     return max_length;
 }
+
+//
+//reverse : utility function to reverse a word in the string
+//
+void reverse (string &str, int start, int end)
+{
+    while(start<end) {
+        char temp = str[start];
+        str[start] = str[end];
+        str[end] = temp;
+        start++;
+        end--;
+    }
+}
+
+//
+//reversewords: this function reverses a given string
+//
+void reversewords (string &str)
+{
+    char temp;
+    int start = 0;
+    for (int i=0;i<=str.length();i++) {
+        if (i == str.length()) {
+            reverse(str, start, i-1);
+        } else {
+            temp = str[i];
+            if (temp == ' ') {
+                reverse(str, start, i-1);
+                start = i+1;
+            }
+        }
+    }
+    reverse(str, 0, static_cast<int>(str.length()-1));
+    cout<< str;
+}
+
+// recursive equation
+//int lcs( char *X, char *Y, int m, int n )
+//{
+//    if (m == 0 || n == 0)
+//        return 0;
+//    if (X[m-1] == Y[n-1])
+//        return 1 + lcs(X, Y, m-1, n-1);
+//    else
+//        return max(lcs(X, Y, m, n-1), lcs(X, Y, m-1, n));
+//}
+//
+//LCSubsequence: DP solution for LCS
+//
+int LCSubsequence (string str1, string str2)
+{
+    int len1 = static_cast<int>(str1.length());
+    int len2 = static_cast<int>(str2.length());
+    int table[len1+1][len2+1];
+    int result = 0;
+    
+    for (int i=0;i<=len1;i++) {
+        for (int j=0;j<=len2;j++) {
+            // Create a table to store lengths of longest common suffixes of
+            // substrings.   Notethat table[i][j] contains length of longest
+            // common suffix of X[0..i-1] and Y[0..j-1]. The first row and
+            // first column entries have no logical meaning, they are used only
+            // for simplicity of program
+            if (i==0 || j==0) {
+                table[i][j] = 0;
+            } else if (str1[i-1] == str2[j-1]) {
+                table[i][j] = table[i-1][j-1] + 1;
+                result = max(result, table[i][j]);
+            } else {
+                table[i][j] = max(table[i-1][j], table[i][j-1]);
+            }
+        }
+    }
+    return table[len1][len2];
+}
+//The longest common suffix has following optimal substructure property
+//LCSuff(X, Y, m, n) = LCSuff(X, Y, m-1, n-1) + 1 if X[m-1] = Y[n-1]
+//                     0  Otherwise (if X[m-1] != Y[n-1])
+//
+//The maximum length Longest Common Suffix is the longest common substring.
+//LCSubStr(X, Y, m, n)  = Max(LCSuff(X, Y, i, j)) where 1 <= i <= m
+//                        and 1 <= j <= n
+int LCSubstr (string str1, string str2)
+{
+    int len1 = static_cast<int>(str1.length());
+    int len2 = static_cast<int>(str2.length());
+    int table[len1+1][len2+1];
+    int result = 0;
+    
+    for (int i=0;i<=len1;i++) {
+        for (int j=0;j<=len2;j++) {
+            // Create a table to store lengths of longest common suffixes of
+            // substrings.   Notethat table[i][j] contains length of longest
+            // common suffix of X[0..i-1] and Y[0..j-1]. The first row and
+            // first column entries have no logical meaning, they are used only
+            // for simplicity of program
+            if (i==0 || j==0) {
+                table[i][j] = 0;
+            } else if (str1[i-1] == str2[j-1]) {
+                table[i][j] = table[i-1][j-1] + 1;
+                result = max(result, table[i][j]);
+            } else {
+                table[i][j] = 0;
+            }
+        }
+    }
+    return result;
+}
 void test_string (void) {
     kmp("ababababab", "aba");
-    string a = "abc";
-    char s [a.length()+1];
-    strcpy(s, a.c_str());
-    permute(s, 0, 2);
+    
+    cout<<"\nPrint all the permutations of a string\n";
+    char s[] = "ABCD";
+    permute(s, 0, static_cast<int>(strlen(s)-1));
+    cout<<endl;
+    
     char str[] = "forgeeksskeegfor";
     int max_pl_length = longest_palindromic_substring(str);
     cout<< "the longest palindromic substring is " << max_pl_length;
@@ -201,4 +364,24 @@ void test_string (void) {
     cout<<"the longest palindromic substring with O(1) space "<< max_pl_length;
     cout<<endl;
     
+    cout<<"\nParentheses Checker\n";
+    cout << "The parentheses are balanced "<<check_parentheses("(a(b{c+d}))");
+    cout<<endl;
+    
+    cout<<"\nReverse Words\n";
+    string str1 = "i like programming very much";
+    reversewords(str1);
+    cout<<endl;
+    
+    cout<<"\nLongest Common Substring\n";
+    string st1 = "GeeksforGeeks";
+    string st2 = "GeeksQuiz";
+    cout<<"the longest common substring is " << LCSubstr(st1, st2);
+    cout<<endl;
+    
+    cout<<"\nLongest Common Subsequence\n";
+    string st3 = "AGGTAB";
+    string st4 = "GXTXAYB";
+    cout<<"the longest common subsequence is " << LCSubsequence(st3, st4);
+    cout<<endl;
 }
