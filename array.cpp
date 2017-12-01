@@ -423,13 +423,47 @@ bool find_triplets (const vector<int> arr) {
     return false;
 }
 
+typedef struct Interval {
+    int buy;
+    int sell;
+}Interval_t;
 //
 //stockBuySell : Maximize the profit given the price of stock at each day
 //
 void stockBuySell (const vector<int> stock_prices)
 {
+    int size =  static_cast<int>(stock_prices.size());
+    vector<Interval_t> sol;
     
+    if (size == 1) {
+        return;
+    }
     
+    int i=0;
+    
+    while (i<size-1) {
+        Interval_t temp;
+        //Find the local minima first
+        while (i<size && stock_prices[i+1]<stock_prices[i]) {
+            i++;
+        }
+        
+        temp.buy = stock_prices[i];
+        
+        //Find the local maxima
+        while(i<size && stock_prices[i+1]>stock_prices[i]) {
+            i++;
+        }
+        temp.sell = stock_prices[i];
+        sol.push_back(temp);
+    }
+    
+    for (int i=0;i<sol.size();i++) {
+        cout<<"BUY: " <<sol[i].buy;
+        cout<<" SELL: " <<sol[i].sell;
+        
+        cout<<endl;
+    }
 }
 
 //
