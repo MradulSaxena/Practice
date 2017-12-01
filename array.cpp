@@ -424,12 +424,37 @@ bool find_triplets (const vector<int> arr) {
 }
 
 //
-//stockBuySell : Maximize the profit given the proze of stock at each day
+//stockBuySell : Maximize the profit given the price of stock at each day
 //
 void stockBuySell (const vector<int> stock_prices)
 {
     
     
+}
+
+//
+//min_jump : find the minimum number of jumps needed to reach the end
+//
+int min_jump (const vector<int> jump)
+{
+    int size  = static_cast<int>(jump.size());
+    
+    vector<int> jumps(size, INT_MAX);
+    
+    if (size == 0 || jump[0] == 0) {
+        return INT_MAX;
+    }
+    
+    jumps[0] = 0;
+    for (int i=1;i<size;i++) {
+        for (int j=0;j<i;j++) {
+            if (i <= j+jump[j] && jump[j] != INT_MAX) {
+                jumps[i] = min(jumps[i], jumps[j]+1);
+            }
+        }
+    }
+    
+    return jumps[size-1];
 }
 void test_array (void) {
 
@@ -517,4 +542,10 @@ void test_array (void) {
     vector<int> stock_prices = {100, 180, 260, 310, 40, 535, 695};
     stockBuySell(stock_prices);
     cout << endl;
+    
+    cout<< "\nmin jumps\n";
+    vector<int> jump = {1, 3, 6, 1, 0, 9};
+    cout<< "minimum number of jumps needed are " << min_jump(jump);
+    cout<<endl;
+    
 }
