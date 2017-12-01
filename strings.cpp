@@ -347,8 +347,30 @@ int LCSubstr (string str1, string str2)
     }
     return result;
 }
+
+long long my_atoi (string str)
+{
+    long long result = 0;
+    int i=0, sign=1;
+    
+    if (str[0] == '-') {
+        sign = -1;
+        i++;
+    } else {
+        sign = 1;
+    }
+    for (;i<str.size();i++) {
+        result = result*10 + (str[i] - '0');
+    }
+    
+    return result * sign;
+}
+
 void test_string (void) {
     kmp("ababababab", "aba");
+    
+    cout << "\nOwn ATOI function "<<my_atoi("-9734392742");
+    cout<<endl;
     
     cout<<"\nPrint all the permutations of a string\n";
     char s[] = "ABCD";
