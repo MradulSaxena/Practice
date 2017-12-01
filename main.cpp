@@ -24,19 +24,19 @@ auto maxof (T a, S b) -> decltype(a+b) {
 
 int main(int argc, const char * argv[]) {
     
-//    test_heapsort();
-//
-//    test_quicksort();
-//
-//    test_string();
-//
-//   test_list();
-//
-//    test_array();
-//
-//    test_trie();
-//
-//    test_avl();
+    test_heapsort();
+
+    test_quicksort();
+
+    test_string();
+
+    test_list();
+
+    test_array();
+
+    test_trie();
+
+    test_avl();
     
     test_tree();
     
