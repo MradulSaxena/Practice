@@ -448,7 +448,7 @@ void stockBuySell (const vector<int> stock_prices)
             i++;
         }
         
-        temp.buy = stock_prices[i];
+        temp.buy = stock_prices[i++];
         
         //Find the local maxima
         while(i<size && stock_prices[i+1]>stock_prices[i]) {
