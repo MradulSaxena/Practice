@@ -15,6 +15,7 @@
 #include "trie.h"
 #include "tree.h"
 #include "avl.h"
+#include "mergesort.h"
 
 
 template <typename T, typename S>
@@ -27,6 +28,8 @@ int main(int argc, const char * argv[]) {
     test_heapsort();
 
     test_quicksort();
+    
+    test_mergesort();
 
     test_string();
 
@@ -37,7 +40,7 @@ int main(int argc, const char * argv[]) {
     test_trie();
 
     test_avl();
-    
+
     test_tree();
     
 
