@@ -68,10 +68,13 @@ void mergesort(vector<int>& nums) {
 
 void test_mergesort (void)
 {
-    vector<int> arr = {4,5,6,3,2};
+    cout << "\nMerge Sort\n\n";
+    vector<int> arr = {45,4,5,-1,6,3,2};
     mergesort(arr);
     
     for (auto i:arr) {
-        cout<< i<<endl;
+        cout<< i<<" ";
     }
+    
+    cout<<endl<<endl;;
 }
