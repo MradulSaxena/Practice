@@ -9,7 +9,7 @@
 #include "common_incl.h"
 
 //
-//merge : merges the two subarrays in to a the given result array
+//merge : merges the two subarrays in to the given result array
 //
 void merge (vector<int>& A, vector<int>& B, vector<int>& nums) {
     int A_size = static_cast<int>(A.size());
