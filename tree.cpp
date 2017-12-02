@@ -376,6 +376,34 @@ Node_t *preorder_to_bst (vector<int> preorder_vector)
 }
 
 //
+//closest_node: for a non-empty BST find the closest node
+//
+int closest_node(Node_t *root, int target)
+{
+    
+    int     returned_val = INT_MAX;
+    Node_t *next = nullptr;
+    
+    if (root->data == target) {
+        return target;
+    }
+    
+    if (target<root->data) {
+        next = root->left;
+    } else {
+        next = root->right;
+    }
+    
+    if (!next) {
+        return root->data;
+    }
+    
+    returned_val = closest_node(next , target);
+    
+    return (abs(target - root->data)) < (abs(target - returned_val)) ? root->data : returned_val;
+}
+
+//
 // test_tree: driver function to test tree TC
 //
 void test_tree (void)
@@ -529,4 +557,7 @@ void test_tree (void)
     preorder(bst);
     cout<<endl;
     
+    cout<<"\nClosest Node in BST \n";
+    cout<< "The Closest node in the BST is "<< closest_node(root1,-14) <<endl;
+    cout<<endl;
 }
