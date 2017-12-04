@@ -490,6 +490,37 @@ int min_jump (const vector<int> jump)
     
     return jumps[size-1];
 }
+
+//
+//print_jumping_numbers: prints the jumping numbers less than the given x
+//
+void print_jumping_numbers (int x, int num)
+{
+    
+    queue<int> qu;
+    qu.push(num);
+    
+    while(!qu.empty()) {
+        num = qu.front();
+        qu.pop();
+        if (num <= x) {
+            cout << num<< " ";
+            int digit = num %10;
+            
+            if (digit==0) {
+                qu.push((10*num) + (digit+1));
+            } else if (digit == 9) {
+                qu.push((10*num) + (digit-1));
+            } else {
+                qu.push((10*num) + (digit+1));
+                qu.push((10*num) + (digit-1));
+            }
+        }
+    }
+    
+    return;
+}
+
 void test_array (void) {
 
     cout << "\nFind the missing number from the sorted array\n";
@@ -580,6 +611,12 @@ void test_array (void) {
     cout<< "\nmin jumps\n";
     vector<int> jump = {1, 3, 6, 1, 0, 9};
     cout<< "minimum number of jumps needed are " << min_jump(jump);
+    cout<<endl;
+    
+    cout<<"\njumping numbers\n";
+    int x=40;
+    for (int i=1; i<=9 && i<=x; i++)
+        print_jumping_numbers(x, i);
     cout<<endl;
     
 }
