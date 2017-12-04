@@ -444,14 +444,14 @@ void stockBuySell (const vector<int> stock_prices)
     while (i<size-1) {
         Interval_t temp;
         //Find the local minima first
-        while (i<size && stock_prices[i+1]<stock_prices[i]) {
+        while (i<size-1 && stock_prices[i+1]<stock_prices[i]) {
             i++;
         }
         
         temp.buy = stock_prices[i++];
         
         //Find the local maxima
-        while(i<size && stock_prices[i+1]>stock_prices[i]) {
+        while(i<size-1 && stock_prices[i+1]>stock_prices[i]) {
             i++;
         }
         temp.sell = stock_prices[i];
