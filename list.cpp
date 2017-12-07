@@ -100,6 +100,77 @@ Node_t * mergek_lists (vector<Node_t *> lists)
     return head;
 }
 
+// Structure of random linked list Node
+struct RandNode
+{
+    int data;
+    RandNode *next,*random;
+    RandNode(int x)
+    {
+        data = x;
+        next = random = NULL;
+    }
+};
+
+// Utility function to print the list.
+void print(RandNode *start)
+{
+    RandNode *ptr = start;
+    while (ptr)
+    {
+        cout << "Data = " << ptr->data << ", Random  = "
+        << ptr->random->data << endl;
+        ptr = ptr->next;
+    }
+}
+
+//
+//clone a list with random poniters in O(1) extra space
+//
+RandNode * clone(RandNode *head)
+{
+    if (!head) {
+        return NULL;
+    }
+    RandNode *curr = head;
+    RandNode *temp;
+    
+    //insert a new node next to the original node
+    while(curr) {
+        temp = curr->next;
+        RandNode *newnode = new RandNode(curr->data);
+        curr->next = newnode;
+        newnode->next = temp;
+        curr = temp;
+    }
+    
+    curr = head;
+    //copy the random pointers
+    while(curr) {
+        // copy the random pointer in the new node to the copy of random
+        curr->next->random = curr->random->next;
+        // move to the next newly added node by
+        // skipping an original node
+        curr = curr->next?curr->next->next:curr->next;
+    }
+    
+    RandNode * orig_list = head;
+    RandNode * cloned_list = head->next;
+    temp = cloned_list;
+
+    while(orig_list && temp) {
+        orig_list->next = temp?temp->next:NULL;
+        orig_list = orig_list?orig_list->next:NULL;
+        temp->next = orig_list?orig_list->next:NULL;
+        temp = temp->next;
+
+    }
+    
+    
+    return cloned_list;
+    
+}
+
 void test_list (void) {
     
     Node_t *head = NULL;
@@ -122,5 +193,33 @@ void test_list (void) {
     printlist(head);
     remove(&head, 20);
     printlist(head);
+    
+    RandNode* start = new RandNode(1);
+    start->next = new RandNode(2);
+    start->next->next = new RandNode(3);
+    start->next->next->next = new RandNode(4);
+    start->next->next->next->next = new RandNode(5);
+    
+    // 1's random points to 3
+    start->random = start->next->next;
+    
+    // 2's random points to 1
+    start->next->random = start;
+    
+    // 3's and 4's random points to 5
+    start->next->next->random =
+    start->next->next->next->next;
+    start->next->next->next->random =
+    start->next->next->next->next;
+    
+    // 5's random points to 2
+    start->next->next->next->next->random =
+    start->next;
+    print(start);
+    
+    cout <<"\n\nCloned List\n";
+    RandNode *cloned_list = clone(start);
+    print(cloned_list);
+    
 }
 
