@@ -16,7 +16,7 @@
 #include "tree.h"
 #include "avl.h"
 #include "mergesort.h"
-
+#include "bit_magic.h"
 
 template <typename T, typename S>
 auto maxof (T a, S b) -> decltype(a+b) {
@@ -25,23 +25,25 @@ auto maxof (T a, S b) -> decltype(a+b) {
 
 int main(int argc, const char * argv[]) {
     
-    test_heapsort();
+//    test_heapsort();
+//
+//    test_quicksort();
+//    
+//    test_mergesort();
+//
+//    test_string();
+//
+//    test_list();
 
-    test_quicksort();
+//    test_array();
+
+//    test_trie();
+//
+//    test_avl();
+//
+//    test_tree();
     
-    test_mergesort();
-
-    test_string();
-
-    test_list();
-
-    test_array();
-
-    test_trie();
-
-    test_avl();
-
-    test_tree();
+    test_bit_magic();
     
 
     return 0;
