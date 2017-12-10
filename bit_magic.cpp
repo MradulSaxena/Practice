@@ -16,6 +16,7 @@ u_int32_t bitwise_add (u_int32_t a, u_int32_t b)
     u_int32_t carry_in = 0;
     u_int32_t sum = 0;
     u_int32_t k = 1;
+    
     while(temp_a || temp_b) {
         
         u_int32_t a_k = (a & k);
@@ -34,6 +35,11 @@ u_int32_t bitwise_add (u_int32_t a, u_int32_t b)
     return (sum | carry_in);
 }
 
+//
+//bitwise_multiply : this function multiplies two unsigned numbers using
+//                   bitwise operations.idea is to add 2^k*b to the sum for
+//                   every kth bit that is set in a
+//
 u_int32_t bitwise_multiply (u_int32_t a, u_int32_t b)
 {
     int sum=0;
@@ -50,6 +56,25 @@ u_int32_t bitwise_multiply (u_int32_t a, u_int32_t b)
     return sum;
 }
 
+int bitwise_division(int x, int y)
+{
+    int result = 0;
+    int power = 32;
+    int y_power = (y << power);
+    
+    while (x>=y) {
+        while (y_power > x) {
+            y_power >>= 1;
+            --power;
+        }
+        
+        x = x-y_power;
+        result += 1;
+    }
+    
+    return result;
+}
+
 void test_bit_magic (void)
 
 {
@@ -60,5 +85,9 @@ void test_bit_magic (void)
     
     cout<<"\nMultiply using bit wise operators\n";
     cout<<bitwise_multiply(5,7);
+    cout<<endl;
+    
+    cout<<"\nDivision using bit wise operators\n";
+    cout<<bitwise_division(87,5);
     cout<<endl;
 }
