@@ -400,10 +400,129 @@ int closest_node(Node_t *root, int target)
     
     returned_val = closest_node(next , target);
     
-    return (abs(target - root->data)) < (abs(target - returned_val)) ? root->data : returned_val;
+    return (abs(target - root->data)) < (abs(target - returned_val))
+            ? root->data : returned_val;
 }
 
 //
+//get_height : returns the height of a binary tree
+//
+int get_height (Node_t *root)
+{
+    if (!root) {
+        return 0;
+    }
+    return (max(get_height(root->left),get_height(root->right))+1);
+}
+
+//
+//get_width: return the widht of a full binary tree.
+//           width is the max(left, right)*2+1
+//
+int get_width (Node_t *root)
+{
+    if (!root) {
+        return 0;
+    }
+    return ((max(get_width(root->left),get_width(root->right))*2)+1);
+}
+
+void get_help (vector<vector<string>>& my_vector, Node_t * root, int level,
+               int left, int right)
+{
+    if (!root) {
+        return;
+    }
+    
+    int mid = left+(right-left)/2;
+    
+    my_vector[level][mid] = to_string(root->data);
+    get_help(my_vector, root->left, level+1, left, mid-1);
+    get_help(my_vector, root->right, level+1, mid+1, right);
+}
+
+/*
+ Print a binary tree in an m*n 2D string array following these rules:
+ 
+ The row number m should be equal to the height of the given binary tree.
+ The column number n should always be an odd number.
+ The root node's value (in string format) should be put in the exactly middle of
+ the first row it can be put. The column and the row where the root  node belongs
+ will separate the rest space into two parts (left-bottom part and right-bottom
+ part). You should print the left subtree in the left-bottom part and print the
+ right subtree in the right-bottom part. The left-bottom part and the right-bottom
+ part should have the same size. Even if one subtree is none while the other is
+ not, you don't need to print anything for the none subtree but still need to
+ leave the space as large as that for the other subtree. However, if two
+ subtrees are none, then you don't need to leave space for both of them.
+ Each unused space should contain an empty string "".
+ Print the subtrees following the same rules.
+ */
+void print_binary_tree (Node_t *root) {
+    
+    if (!root) {
+        return;
+    }
+    
+    int h = get_height(root);
+    int w = get_width(root);
+    vector<vector<string>> my_vector(h, vector<string>(w, "\"\""));
+    
+    get_help(my_vector, root, 0 , 0 , w-1);
+    
+    for (int i=0;i<h;i++) {
+        for (int j=0;j<w;j++) {
+            cout<< my_vector[i][j] << " ";
+        }
+        cout<<endl;
+    }
+    
+}
+
+typedef struct connect_node_s {
+    struct connect_node_s *left;
+    struct connect_node_s *right;
+    struct connect_node_s *nextright;
+    int data;
+}connect_node;
+
+//
+//getnextright : helper function to get the next right element for a given node
+//
+connect_node *
+getnextright(connect_node *node)
+{
+    if (!node) {
+        return NULL;
+    }
+    
+    connect_node *temp =node->nextright;
+    
+    while (temp != NULL) {
+        if (temp->left) {
+            return temp->left;
+        }
+        
+        if (temp->right) {
+            return temp->right;
+        }
+        
+        temp = temp->nextright;
+    }
+    
+    return temp;
+}
+
+//
+//connect_same_level
+//
+void connect_same_level (connect_node *root)
+{
+    if (!root) {
+        return;
+    }
+}
+
 // test_tree: driver function to test tree TC
 //
 void test_tree (void)
@@ -559,5 +678,9 @@ void test_tree (void)
     
     cout<<"\nClosest Node in BST \n";
     cout<< "The Closest node in the BST is "<< closest_node(root1,-14) <<endl;
+    cout<<endl;
+    
+    cout<<"\nPrint Binary Tree\n";
+    print_binary_tree(root1);
     cout<<endl;
 }
