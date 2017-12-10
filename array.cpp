@@ -569,6 +569,40 @@ vector<vector<int>> find_3sum_triplets (vector<int> nums)
     return sol;
 }
 
+//
+//job_scheduling_with_cooldown: schedule jobs with the given cooldown such that
+//                              no two same jobs can be scheduled before cooldown
+//
+vector<string>
+job_scheduling_with_cooldown (vector<int>tasks, int cooldown)
+{
+    vector<string> sol;
+    unordered_map<int, int> my_map;
+    
+    for (int i=0; i<tasks.size();i++) {
+        if (my_map.count(tasks[i])) {
+            int last_time = my_map[tasks[i]];
+            if ((i-last_time)>cooldown) {
+                sol.push_back(to_string(tasks[i]));
+            } else {
+                int diff = i-last_time;
+                while(diff <= cooldown) {
+                    sol.push_back("_");
+                    diff++;
+                }
+                sol.push_back(to_string(tasks[i]));
+            }
+            my_map[tasks[i]] = i;
+        } else {
+            my_map.insert(make_pair(tasks[i], i));
+            sol.push_back(to_string(tasks[i]));
+        }
+    }
+    
+    return sol;
+}
+
+
 //vector<int> board(30, -1);
 //
 //void print_solution(int k) {
@@ -701,4 +735,15 @@ void test_array (void) {
         cout << endl;
     }
     cout<<endl;
+    
+    vector<int> tasks = {1, 2, 1, 1, 3, 4};
+    int cooldown = 2;
+    vector<string> task_res;
+    task_res = job_scheduling_with_cooldown(tasks, cooldown);
+    
+    for(auto i:task_res) {
+        cout<< i<< ",";
+    }
+    cout<<endl;
+    
 }
