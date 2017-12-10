@@ -521,6 +521,67 @@ void print_jumping_numbers (int x, int num)
     return;
 }
 
+int reverse_number (int x) {
+    
+    int result = 0;
+    int temp = x;
+    while(x) {
+        int remainder = x%10;
+        result = result*10 + remainder;
+        x = x/10;
+    }
+    return temp>0?result:-result;
+}
+
+
+vector<vector<int>> find_3sum_triplets (vector<int> nums)
+{
+    vector<vector<int>> sol = {};
+    
+    // sort the input
+    sort(nums.begin(), nums.end());
+
+    for (int i=0;i<nums.size()-2;i++) {
+        int l = i+1;
+        int r = static_cast<int>(nums.size())-1;
+        int num = nums[i];
+        while(l<r) {
+            if ((nums[l] + nums[r] + nums[i]) > 0) {
+                r--;
+            } else if ((nums[l] + nums[r] + nums[i]) < 0) {
+                l++;
+            } else {
+                vector<int> temp;
+                temp.push_back(num);
+                temp.push_back(nums[l]);
+                temp.push_back(nums[r]);
+                sol.push_back(temp);
+                int temp1 = nums[l];
+                int temp2 = nums[r];
+                while(l<r && nums[l] == temp1) l++;
+                while(l<r && nums[r] == temp2) r--;
+            }
+        }
+
+        while ((i<(static_cast<int>(nums.size()) - 2)) && (nums[i] == nums[i+1])) i++;
+    }
+    
+    return sol;
+}
+
+//vector<int> board(30, -1);
+//
+//void print_solution(int k) {
+//
+//}
+//void back_track (int n, int k) {
+//    if (k==n) {
+//        print_solution(k);
+//    } else {
+//
+//    }
+//}
+
 void test_array (void) {
 
     cout << "\nFind the missing number from the sorted array\n";
@@ -619,4 +680,25 @@ void test_array (void) {
         print_jumping_numbers(x, i);
     cout<<endl;
     
+//    cout<<"\nN-Queens Problem\n";
+//    // size of the board
+//    int n = 5;
+//    back_track(n, 0);
+//    cout<<endl;
+    
+    cout<<"\nreverse number\n";
+    cout << reverse_number(4245);
+    cout<<endl;
+    
+    cout<<"\nFind all unique triplets with zero sum\n";
+    vector<int> three_sum = {0, -1, 2, -3, 1};
+    vector<vector<int>> sol;
+    sol = find_3sum_triplets(three_sum);
+    for (int i=0; i<sol.size();i++) {
+        for (int j=0;j<3;j++) {
+            cout << sol[i][j] << " , ";
+        }
+        cout << endl;
+    }
+    cout<<endl;
 }
