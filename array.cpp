@@ -603,6 +603,55 @@ job_scheduling_with_cooldown (vector<int>tasks, int cooldown)
 }
 
 
+// Driver function to sort the vector elements
+// by first element of pairs
+bool cmp (const pair<int,int> &a,
+          const pair<int,int> &b)
+{
+    return (a.first < b.first);
+}
+
+//
+// russian_doll_envelope : You have a number of envelopes with widths and heights
+//                         given as a pair of integers (w, h). One envelope can
+//                         fit into another if and only if both the width and
+//                         height of one envelope is greater than the width and
+//                         height of the other envelope.
+//                         What is the maximum number of envelopes can you
+//                         Russian doll? (put one inside other)
+//
+int russian_doll_envelope (vector<pair<int, int>> envelopes)
+{
+    int result = 0;
+    int size = static_cast<int>(envelopes.size());
+    
+    vector<int> dp(size, 1);
+
+    sort(envelopes.begin(), envelopes.end(), cmp);
+
+    if (size==0) {
+        return result;
+    }
+
+    for (int i=0; i<size; i++) {
+
+        pair<int,int> temp = envelopes[i];
+
+        for (int j=0;j<i;j++) {
+
+            pair<int,int> temp_next = envelopes[j];
+
+            if (temp.first > temp_next.first &&
+                temp.second > temp_next.second) {
+                dp[i] = max(dp[i], dp[j] + 1);
+            }
+        }
+
+        result = max(result, dp[i]);
+    }
+    return result;
+}
+
 //vector<int> board(30, -1);
 //
 //void print_solution(int k) {
@@ -744,6 +793,17 @@ void test_array (void) {
     for(auto i:task_res) {
         cout<< i<< ",";
     }
+    cout<<endl;
+    
+//    find_celebrity();
+    
+    cout<<"\nRussian Doll Envelope Problem\n";
+    vector<pair<int, int>> envelope;
+    envelope.push_back(make_pair(5,4));
+    envelope.push_back(make_pair(6,4));
+    envelope.push_back(make_pair(6,7));
+    envelope.push_back(make_pair(2,3));
+    cout<<russian_doll_envelope(envelope);
     cout<<endl;
     
 }
