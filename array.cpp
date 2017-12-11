@@ -769,7 +769,7 @@ void test_array (void) {
 //    back_track(n, 0);
 //    cout<<endl;
     
-    cout<<"\nreverse number\n";
+    cout<<"\nReverse Number\n";
     cout << reverse_number(4245);
     cout<<endl;
     
@@ -788,6 +788,7 @@ void test_array (void) {
     vector<int> tasks = {1, 2, 1, 1, 3, 4};
     int cooldown = 2;
     vector<string> task_res;
+    cout<<"\nJob Scheduling with Cool Down\n";
     task_res = job_scheduling_with_cooldown(tasks, cooldown);
     
     for(auto i:task_res) {
