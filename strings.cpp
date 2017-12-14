@@ -351,26 +351,48 @@ int LCSubstr (string str1, string str2)
 long long my_atoi (string str)
 {
     long long result = 0;
-    int i=0, sign=1;
+    int indicator = 1;
     
-    if (str[0] == '-') {
-        sign = -1;
-        i++;
-    } else {
-        sign = 1;
-    }
-    for (;i<str.size();i++) {
-        result = result*10 + (str[i] - '0');
+    for(int i = 0; i<str.size();)
+    {
+        i = static_cast<int>(str.find_first_not_of(' '));
+        if(str[i] == '-' || str[i] == '+') {
+            indicator = (str[i++] == '-')? -1 : 1;
+        }
+        
+        while('0'<= str[i] && str[i] <= '9')
+        {
+            result = result*10 + (str[i++]-'0');
+            if(result*indicator >= INT_MAX) return INT_MAX;
+            if(result*indicator <= INT_MIN) return INT_MIN;
+        }
+        return result*indicator;
     }
     
-    return result * sign;
+    return result*indicator;
 }
 
+void generate_balanaced_parentheses(int num_left_paren, int num_right_paren,
+                                  const string &prefix, vector<string> &result)
+{
+    if (num_right_paren == 0) {
+        result.push_back(prefix);
+        return;
+    }
+    if (num_left_paren>0) {
+        generate_balanaced_parentheses(num_left_paren-1, num_right_paren, prefix+"(", result);
+    }
+    
+    if (num_left_paren<num_right_paren) {
+        generate_balanaced_parentheses(num_left_paren, num_right_paren-1, prefix+")", result);
+    }
+}
 void test_string (void) {
     kmp("ababababab", "aba");
     
-    cout << "\nOwn ATOI function "<<my_atoi("-9734392742");
+    cout << "\nOwn ATOI function "<<my_atoi("-973432");
     cout<<endl;
+    
     
     cout<<"\nPrint all the permutations of a string\n";
     char s[] = "ABCD";
@@ -405,5 +427,15 @@ void test_string (void) {
     string st3 = "AGGTAB";
     string st4 = "GXTXAYB";
     cout<<"the longest common subsequence is " << LCSubsequence(st3, st4);
+    cout<<endl;
+    
+    cout<<"\nGenerate String of balanced parantheses\n";
+    int n=4;
+    vector<string> result;
+    generate_balanaced_parentheses(n, n, "", result);
+    for (auto i:result) {
+        cout<< i ;
+        cout<<endl;
+    }
     cout<<endl;
 }
