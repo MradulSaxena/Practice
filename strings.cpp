@@ -372,7 +372,7 @@ long long my_atoi (string str)
     return result*indicator;
 }
 
-void generate_balanaced_parentheses(int num_left_paren, int num_right_paren,
+void generate_balanced_parentheses(int num_left_paren, int num_right_paren,
                                   const string &prefix, vector<string> &result)
 {
     if (num_right_paren == 0) {
@@ -380,11 +380,11 @@ void generate_balanaced_parentheses(int num_left_paren, int num_right_paren,
         return;
     }
     if (num_left_paren>0) {
-        generate_balanaced_parentheses(num_left_paren-1, num_right_paren, prefix+"(", result);
+        generate_balanced_parentheses(num_left_paren-1, num_right_paren, prefix+"(", result);
     }
     
     if (num_left_paren<num_right_paren) {
-        generate_balanaced_parentheses(num_left_paren, num_right_paren-1, prefix+")", result);
+        generate_balanced_parentheses(num_left_paren, num_right_paren-1, prefix+")", result);
     }
 }
 void test_string (void) {
@@ -432,7 +432,7 @@ void test_string (void) {
     cout<<"\nGenerate String of balanced parantheses\n";
     int n=4;
     vector<string> result;
-    generate_balanaced_parentheses(n, n, "", result);
+    generate_balanced_parentheses(n, n, "", result);
     for (auto i:result) {
         cout<< i ;
         cout<<endl;
