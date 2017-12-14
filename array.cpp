@@ -255,6 +255,7 @@ void leaders (const vector <int> arr) {
         }
     }
 }
+
 //
 //minimum_platforms : find the minimum number of platforms needed for trains
 //                    given their arrival and departure times.
@@ -652,19 +653,92 @@ int russian_doll_envelope (vector<pair<int, int>> envelopes)
     return result;
 }
 
-//vector<int> board(30, -1);
 //
-//void print_solution(int k) {
+//is_valid_placement for the queens
 //
-//}
-//void back_track (int n, int k) {
-//    if (k==n) {
-//        print_solution(k);
-//    } else {
-//
-//    }
-//}
+bool is_valid_placement(vector<int> &col)
+{
+    int row_id = static_cast<int>(col.size()) - 1;
+    
+    for (int i=0;i<row_id;i++) {
+        int diff = abs (col[i] - col[row_id]);
+        if ((diff == 0) || (diff == row_id-i)) {
+            // diff == 0 means same column
+            // diff == row-i means diagonally same
+            return false;
+        }
+        
+    }
+    return true;
+}
 
+void solve_NQueens (int n, int row, vector<int> &col, vector<vector<int>> &result)
+{
+    if (n == row) {
+        result.push_back(col);
+    } else {
+        for (int i=0; i<n; i++) {
+            col.push_back(i);
+            if (is_valid_placement(col)) {
+                solve_NQueens(n,row+1, col, result);
+            }
+            col.pop_back();
+        }
+    }
+}
+
+//
+//n_queens: N Queens Problem
+//
+vector<vector<int>> n_queens(int row)
+{
+    vector<vector<int>> sol;
+    vector<int> col;
+    
+    solve_NQueens(row, 0, col, sol);
+    
+    return sol;
+    
+}
+
+//
+//generate_permutations: Generate permutations for the given input
+//                       Idea is to go over all the possibities with recursion
+//                       and a for loop
+//
+void generate_permutations(vector<int> arr, int start)
+{
+    if (start == arr.size()-1) {
+        for (auto i:arr) {
+            cout<< i << " ";
+        }
+        cout <<endl;
+    }
+    
+    for (int i=start;i<arr.size();i++) {
+        swap(arr[start], arr[i]);
+        generate_permutations(arr, start+1);
+        swap(arr[start], arr[i]);
+    }
+    
+}
+
+//
+//generate_power_set : Generate power set for the given set
+//
+void generate_power_set(vector<int> arr, int to_be_selected, vector<int> &temp_select,
+                        vector<vector<int>> &power_set)
+{
+    if (to_be_selected == arr.size()) {
+        power_set.push_back(temp_select);
+        return;
+    }
+    
+    temp_select.push_back(arr[to_be_selected]);
+    generate_power_set(arr, to_be_selected+1, temp_select, power_set);
+    temp_select.pop_back();
+    generate_power_set(arr, to_be_selected+1, temp_select, power_set);
+}
 void test_array (void) {
 
     cout << "\nFind the missing number from the sorted array\n";
@@ -763,11 +837,17 @@ void test_array (void) {
         print_jumping_numbers(x, i);
     cout<<endl;
     
-//    cout<<"\nN-Queens Problem\n";
-//    // size of the board
-//    int n = 5;
-//    back_track(n, 0);
-//    cout<<endl;
+    cout<<"\nN-Queens Problem\n";
+    // size of the board
+    int n = 4;
+    vector<vector<int>> sol_queens = n_queens(n);
+    for (int i=0; i<sol_queens.size();i++) {
+        for (int j=0;j<sol_queens[0].size();j++) {
+            cout << sol_queens[i][j] << " , ";
+        }
+        cout << endl;
+    }
+    cout<<endl;
     
     cout<<"\nReverse Number\n";
     cout << reverse_number(4245);
@@ -805,6 +885,25 @@ void test_array (void) {
     envelope.push_back(make_pair(6,7));
     envelope.push_back(make_pair(2,3));
     cout<<russian_doll_envelope(envelope);
+    cout<<endl;
+    
+    cout<<"\nGenerate Permutations\n";
+    vector<int>permute = {1,2,3,4};
+    generate_permutations(permute, 0);
+    cout<<endl;
+    
+    cout<<"\nPower Set\n";
+    vector<vector<int>> power_set = {};
+    vector<int> last_sol = {};
+    generate_power_set(permute, 0, last_sol, power_set);
+    for (int i=0; i<power_set.size();i++) {
+        vector<int>temp = power_set[i];
+        cout << "{";
+        for (int j=0;j<temp.size();j++) {
+            cout << temp[j] << "  ";
+        }
+        cout << "}"<<endl;
+    }
     cout<<endl;
     
 }
