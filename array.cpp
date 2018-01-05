@@ -739,6 +739,44 @@ void generate_power_set(vector<int> arr, int to_be_selected, vector<int> &temp_s
     temp_select.pop_back();
     generate_power_set(arr, to_be_selected+1, temp_select, power_set);
 }
+
+//
+//generateGrayarr : compute gray code for the given number of digits
+//                  idea is to append 0 to the array and append 1 to the
+//                  reverse of the given array and then append both to get the
+//                  result.
+//
+void generateGrayarr(int n)
+{
+    vector<string> temp;
+    if (n<=0) {
+        return;
+    }
+    temp.push_back("0");
+    temp.push_back("1");
+    
+    for (int i= 2; i<(1<<n); i = (i<<1))
+    {
+        //reverse temp and assign to prefix_1 and prepend 1 to it
+        for (int j=i-1;j>=0;j--) {
+            temp.push_back(temp[j]);
+        }
+        
+        for (int j=0;j<i;j++) {
+            temp[j] = "0"+temp[j];
+        }
+        
+        for (int j=i;j<2*i;j++) {
+            temp[j] = "1"+temp[j];
+        }
+    }
+    
+    for (auto i:temp) {
+        cout<<i<<endl;
+    }
+    
+}
+
 void test_array (void) {
 
     cout << "\nFind the missing number from the sorted array\n";
@@ -905,6 +943,10 @@ void test_array (void) {
         cout << "}"<<endl;
     }
     
+    cout<<endl;
+    
+    cout<<"\nGray Code\n";
+    generateGrayarr(3);
     cout<<endl;
     
 }
