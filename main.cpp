@@ -33,7 +33,7 @@ int main(int argc, const char * argv[]) {
 //
 //    test_string();
 //
-//    test_list();
+    test_list();
 
 //    test_array();
 
@@ -43,7 +43,7 @@ int main(int argc, const char * argv[]) {
 //
 //    test_tree();
     
-    test_bit_magic();
+//    test_bit_magic();
     
 
     return 0;
