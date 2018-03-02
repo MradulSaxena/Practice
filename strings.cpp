@@ -331,7 +331,7 @@ int LCSubstr (string str1, string str2)
     for (int i=0;i<=len1;i++) {
         for (int j=0;j<=len2;j++) {
             // Create a table to store lengths of longest common suffixes of
-            // substrings.   Notethat table[i][j] contains length of longest
+            // substrings. Note that table[i][j] contains length of longest
             // common suffix of X[0..i-1] and Y[0..j-1]. The first row and
             // first column entries have no logical meaning, they are used only
             // for simplicity of program
