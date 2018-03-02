@@ -25,6 +25,7 @@
 #include <map>
 #include <stack>
 
+
 using namespace std;
 
 typedef enum status {
@@ -42,5 +43,11 @@ typedef struct  Node_s {
     struct Node_s *right;
     struct Node_s *next;
 }Node_t;
+
+typedef struct hash_node_s {
+    int key;
+    int value;
+    hash_node_s *next;
+}hash_node_t;
 
 #endif /* common_incl_h */
