@@ -16,26 +16,26 @@ public:
         b = a-b;
         a = a-b;
     }
-    
+
     void heapify (vector<int> &arr,int size) {
         for (int i=size/2;i>=0;i--) {
             if ((size-1)>= ((2*i)+1) && (arr[i]< arr[(2*i)+1])) {
                 swap(arr[i], arr[(2*i)+1]);
             }
-            
+
             if ((size-1)>= ((2*i)+2) && (arr[i]< arr[(2*i)+2])) {
                 swap(arr[i], arr[(2*i)+2]);
             }
         }
     }
-    
+
     /* swap the largest element which is at the beginning to the end element as
      * the largest element belongs to the end
      */
     void remove_heap(vector<int> &arr, int size) {
         swap(arr[0], arr[size-1]);
     }
-    
+
     void heapsort(vector<int> &arr) {
         /* heap is a complete binary tree
          * so we will make use of the fact that
@@ -51,7 +51,6 @@ public:
             heapify(arr, size);
         }
     }
-    
 };
 
 void test_heapsort (void);
