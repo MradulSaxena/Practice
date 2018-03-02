@@ -647,7 +647,6 @@ int russian_doll_envelope (vector<pair<int, int>> envelopes)
                 dp[i] = max(dp[i], dp[j] + 1);
             }
         }
-
         result = max(result, dp[i]);
     }
     return result;
@@ -942,8 +941,6 @@ void test_array (void) {
         }
         cout << "}"<<endl;
     }
-    
-    cout<<endl;
     
     cout<<"\nGray Code\n";
     generateGrayarr(3);
