@@ -69,6 +69,65 @@ status_t insert (trie_t *root, string word) {
     return status;
 }
 
+bool is_safe(int row_index, int col_index, vector<vector<bool>>visited, int max_row,
+             int max_column)
+{
+    if (row_index>=0 && row_index<max_row && col_index >=0 &&
+        col_index<max_column && !visited[row_index][col_index]) {
+        return true;
+    }
+    
+    return false;
+}
+void find_word(vector<vector<char>> input_matrix, vector<vector<bool>> &visited,
+               trie_t *root, string str, int row_index, int col_index)
+{
+    if (root->is_word) {
+        cout<< str<<endl;
+        return;
+    }
+    
+    if (is_safe(row_index, col_index, visited, static_cast<int>(input_matrix.size()),
+                static_cast<int>(input_matrix[0].size()))) {
+        visited[row_index][col_index] = true;
+        
+        for (int i=0; i< 26; i++) {
+            if (root->children[i]) {
+                find_word(input_matrix, visited, root->children[i], str, row_index+1, col_index+1);
+                find_word(input_matrix, visited, root->children[i], str, row_index+1, col_index);
+                find_word(input_matrix, visited, root->children[i], str, row_index, col_index+1);
+                find_word(input_matrix, visited, root->children[i], str, row_index-1, col_index-1);
+                find_word(input_matrix, visited, root->children[i], str, row_index-1, col_index);
+                find_word(input_matrix, visited, root->children[i], str, row_index, col_index-1);
+                find_word(input_matrix, visited, root->children[i], str, row_index-1, col_index+1);
+                find_word(input_matrix, visited, root->children[i], str, row_index+1, col_index-1);
+            }
+        }
+    }
+}
+void find_words (trie_t *root, vector<vector<char>> input_matrix)
+{
+    int row = static_cast<int>(input_matrix.size());
+    if (row == 0) {
+        return;
+    }
+    
+    int column = static_cast<int>(input_matrix[0].size());
+    cout << "row is " << row;
+    cout << "\n col is " <<column <<endl;
+    for (int i=0;i<row;i++) {
+        string str;
+        for (int j=0;j<column;j++) {
+            vector<vector<bool>> visited(row,vector<bool>(column, false));
+            if (root->children[j]) {
+                str += input_matrix[i][j];
+                find_word(input_matrix, visited, root->children[j], str, i, j);
+                str = "";
+            }
+        }
+        
+    }
+}
 //
 //
 //
@@ -92,4 +151,22 @@ void test_trie (void)
     if (status != EOK) {
         cout << "search for word " << word << " failed\n";
     }
+    
+    vector<string> boggle_keys = {"geeks", "for", "quiz", "gee"};
+    trie_t *boggle_root = get_Node();
+    
+    for (string i:boggle_keys) {
+        status = insert(boggle_root, i);
+        if (status != EOK) {
+            cout << "Trie insert failed for key " << i;
+        }
+    }
+
+    vector<vector<char>> boggle_matrix = {{'G','I','Z'},
+                                          {'U','E','K'},
+                                          {'Q','S','E'}
+                                         };
+    
+    find_words(boggle_root, boggle_matrix);
+    
 }
