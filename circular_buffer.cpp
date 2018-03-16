@@ -12,7 +12,7 @@
 
 void test_circular_buffer (void)
 {
-    std::unique_ptr<circularBuffer<uint64_t>> CirBufPtr;
+    std::unique_ptr<circularBuffer<uint64_t>> CirBufPtr = make_unique<circularBuffer<uint64_t>>(2);
     
     cout << "Is empty " << CirBufPtr->empty() << std::endl;
     
