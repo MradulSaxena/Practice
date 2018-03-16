@@ -12,20 +12,18 @@
 
 void test_circular_buffer (void)
 {
-    circularBuffer<uint64_t> cb(2);
+    std::unique_ptr<circularBuffer<uint64_t>> CirBufPtr;
     
-    cout << "Is empty " << cb.empty() << std::endl;
+    cout << "Is empty " << CirBufPtr->empty() << std::endl;
     
-    cb.put(10);
-    cb.put(20);
-    cb.put(30);
-    cout << "Is empty " << cb.empty() << std::endl;
-    cout << "Is Full " << cb.full() << std::endl;
+    CirBufPtr->put(10);
+    CirBufPtr->put(20);
+    CirBufPtr->put(30);
+    cout << "Is empty " << CirBufPtr->empty() << std::endl;
+    cout << "Is Full " << CirBufPtr->full() << std::endl;
     
-    cout <<cb.get()<< std::endl;
-    cout <<cb.get()<< std::endl;
-    cout <<cb.get()<< std::endl;
-    cout <<cb.get()<< std::endl;
-    
-    
+    cout <<CirBufPtr->get()<< std::endl;
+    cout <<CirBufPtr->get()<< std::endl;
+    cout <<CirBufPtr->get()<< std::endl;
+    cout <<CirBufPtr->get()<< std::endl;
 }
