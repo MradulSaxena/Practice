@@ -17,6 +17,7 @@
 #include "avl.h"
 #include "mergesort.h"
 #include "bit_magic.h"
+#include "circular_buffer.h"
 
 template <typename T, typename S>
 auto maxof (T a, S b) -> decltype(a+b) {
@@ -33,7 +34,7 @@ int main(int argc, const char * argv[]) {
 //
 //    test_string();
 //
-    test_list();
+//    test_list();
 
 //    test_array();
 
@@ -45,6 +46,6 @@ int main(int argc, const char * argv[]) {
     
 //    test_bit_magic();
     
-
+    test_circular_buffer();
     return 0;
 }
