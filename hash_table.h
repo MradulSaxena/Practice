@@ -12,15 +12,16 @@
 
 template <typename K, typename V>
 class HashNode {
-    K   key_;
-    V   value_;
-    HashNode *next;
 public:
     HashNode(K key, V value) {
         key_   = key;
         value_ = value;
         next   = NULL;
     }
+private:
+    K   key_;
+    V   value_;
+    HashNode *next;
 };
 
 template <typename K, typename V>
