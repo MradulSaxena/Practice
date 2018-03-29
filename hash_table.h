@@ -10,24 +10,46 @@
 #define hash_table_h
 #include "common_incl.h"
 
-template <typeda>
+template <typename K, typename V>
 class HashNode {
     K   key_;
-    K   value_;
+    V   value_;
     HashNode *next;
 public:
-    HashNode(K key, K Value):key_(key), value_(value), next(NULL);
+    HashNode(K key, V value) {
+        key_   = key;
+        value_ = value;
+        next   = NULL;
+    }
 };
 
-template <class T>
+template <typename K, typename V>
 class HashMap {
 public:
-    int hash_function(int key);
+    HashMap(int size) {
+        _size = size;
+        _table = new HashNode<K, V>*[size]();
+    }
+    int hashFunc(int key);
+
+    bool get(const K &key, V &value) {
+        unsigned long hashValue = hashFunc(key);
+        HashNode<K, V> *entry = _table[hashValue];
+            
+        while (entry != NULL) {
+            if (entry->getKey() == key) {
+                value = entry->getValue();
+                return true;
+            }
+            entry = entry->getNext();
+        }
+        return false;
+    }
+
 private:
-    std::unique_ptr<HashNode<T[]>> _table;
-    int size;
-    
-    
+    HashNode<K, V> **_table;
+    int _size;
 };
 
+void test_hash_map(void);
 #endif /* hash_table_h */

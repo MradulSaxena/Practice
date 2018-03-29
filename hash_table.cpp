@@ -6,25 +6,13 @@
 //  Copyright © 2018 Mradul Saxena. All rights reserved.
 //
 
-#include "common_incl.h"
+#include "hash_table.h"
 
-#define TABLE_SIZE 1000
-
-hash_node_t *table[TABLE_SIZE];
-
-int hash_search (int key)
+void test_hash_map (void)
 {
-    return 0;
+    unique_ptr<HashMap<string, int>> Hash = make_unique<HashMap<string, int>>(10);
+    if (Hash != nullptr) {
+        cout << "hash_map instantiated"<<endl;
+    }
 }
-
-int hash_get (int key)
-{
-    return 0;
-}
-
-int hash_put (int key, int value)
-{
-    return 0;
-}
-
 
