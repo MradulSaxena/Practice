@@ -18,6 +18,7 @@
 #include "mergesort.h"
 #include "bit_magic.h"
 #include "circular_buffer.h"
+#include "hash_table.h"
 
 template <typename T, typename S>
 auto maxof (T a, S b) -> decltype(a+b) {
@@ -45,6 +46,7 @@ int main(int argc, const char * argv[]) {
 //    test_tree();
     
 //    test_bit_magic();
+    test_hash_map();
     
     test_circular_buffer();
     return 0;
