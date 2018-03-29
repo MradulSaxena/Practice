@@ -73,8 +73,17 @@ void* aligned_malloc (int size, int alignment)
     
     //get the total size from malloc
     p1 = (void *) malloc(size+alignment+sizeof(size_t));
+    if (p1 == nullptr) {
+        return nullptr;
+    }
+    
+    //total address
     size_t addr = (size_t)p1 + alignment + sizeof(size_t);
+    
+    //aligned address
     p2 = (void *) (addr - (addr%alignment));
+    
+    //copy the total malloc to the 1 unit before
     *((size_t *)p2-1) = (size_t)p1;
     
     return p2;
@@ -83,8 +92,10 @@ void* aligned_malloc (int size, int alignment)
 void
 aligned_free(void *p)
 {
+    if (p == nullptr) {
+        return;
+    }
     cout << "Address is "<<p<<endl;
-    
     free((void *)(*((size_t *)p - 1)));
 }
 void test_bit_magic (void)
