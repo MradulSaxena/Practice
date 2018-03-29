@@ -7,32 +7,20 @@
 //
 
 #include "common_incl.h"
-
+#include "stddef.h"
+#include <stdlib.h>
 
 u_int32_t bitwise_add (u_int32_t a, u_int32_t b)
 {
-    u_int32_t temp_a = a;
-    u_int32_t temp_b = b;
-    u_int32_t carry_in = 0;
-    u_int32_t sum = 0;
-    u_int32_t k = 1;
+    int partialSum, carry;
+    do {
+        partialSum = a ^ b;
+        carry = (a & b) << 1;
+        a = partialSum;
+        b = carry;
+    } while (carry != 0);
     
-    while(temp_a || temp_b) {
-        
-        u_int32_t a_k = (a & k);
-        u_int32_t b_k = (b & k);
-        u_int32_t carry_out = ((a_k & carry_in) | (a_k & b_k) | (b_k & carry_in));
-
-        sum |= (a_k ^ b_k ^ carry_in);
-        
-        temp_a >>= 1;
-        temp_b >>= 1;
-        
-        carry_in = (carry_out << 1);
-        k <<= 1;
-    }
-    
-    return (sum | carry_in);
+    return partialSum;
 }
 
 //
@@ -75,13 +63,40 @@ int bitwise_division(int x, int y)
     return result;
 }
 
+int bitwise_subtract(int a, int b) {
+    return bitwise_add(a, bitwise_add(~b, 1));
+}
+
+void* aligned_malloc (int size, int alignment)
+{
+    void *p1, *p2;
+    
+    //get the total size from malloc
+    p1 = (void *) malloc(size+alignment+sizeof(size_t));
+    size_t addr = (size_t)p1 + alignment + sizeof(size_t);
+    p2 = (void *) (addr - (addr%alignment));
+    *((size_t *)p2-1) = (size_t)p1;
+    
+    return p2;
+}
+
+void
+aligned_free(void *p)
+{
+    cout << "Address is "<<p<<endl;
+    
+    free((void *)(*((size_t *)p - 1)));
+}
 void test_bit_magic (void)
 
 {
     cout<<"\nAdd using bit wise operators\n";
-    cout<<bitwise_add(5,7);
+    cout<<bitwise_add(5,17);
     cout<<endl;
     
+    cout<<"\nSubtract using bit wise operators\n";
+    cout<<bitwise_subtract(5,17);
+    cout<<endl;
     
     cout<<"\nMultiply using bit wise operators\n";
     cout<<bitwise_multiply(5,7);
@@ -89,5 +104,14 @@ void test_bit_magic (void)
     
     cout<<"\nDivision using bit wise operators\n";
     cout<<bitwise_division(87,5);
+    cout<<endl;
+    
+    cout<<"\nAligned Malloc\n";
+    void *p = aligned_malloc(30,10);
+    cout << p;
+    cout << endl;
+    
+    cout<<"\nAligned Free\n";
+    aligned_free(p);
     cout<<endl;
 }
